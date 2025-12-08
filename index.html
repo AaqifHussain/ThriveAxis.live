@@ -2,243 +2,660 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ThriveAxis - Coming Soon</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            color: white;
-        }
-        
-        .hero-section {
-            height: 100vh;
-            background: 
-                linear-gradient(rgba(0, 21, 41, 0.65), rgba(0, 21, 41, 0.75)),
-                url('https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            position: relative;
-        }
-        
-        .logo-container {
-            margin-bottom: 40px;
-            animation: float 3s ease-in-out infinite;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .logo-wrapper {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            padding: 15px;
-            position: relative;
-        }
-        
-        .logo-wrapper:before {
-            content: "";
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #d4af37, #f7ef8a, #d4af37);
-            z-index: -1;
-            animation: rotate 5s linear infinite;
-        }
-        
-        .logo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
-        }
-        
-        .message {
-            max-width: 800px;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .message h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 300;
-            line-height: 1.2;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        }
-        
-        .message p {
-            font-size: 1.5rem;
-            font-weight: 300;
-            line-height: 1.6;
-            color: #e6e6e6;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .gold-accent {
-            color: #d4af37;
-            font-weight: 500;
-        }
-        
-        .decoration {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-        
-        .circle-1 {
-            width: 100px;
-            height: 100px;
-            top: 15%;
-            left: 10%;
-            animation: pulse 8s infinite;
-        }
-        
-        .circle-2 {
-            width: 150px;
-            height: 150px;
-            bottom: 20%;
-            right: 10%;
-            animation: pulse 10s infinite 1s;
-        }
-        
-        .circle-3 {
-            width: 70px;
-            height: 70px;
-            top: 60%;
-            left: 15%;
-            animation: pulse 7s infinite 0.5s;
-        }
-        
-        .circle-4 {
-            width: 120px;
-            height: 120px;
-            bottom: 30%;
-            right: 20%;
-            animation: pulse 9s infinite 1.5s;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.6;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-        }
-        
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .message h1 {
-                font-size: 2.5rem;
-            }
-            
-            .message p {
-                font-size: 1.2rem;
-            }
-            
-            .logo-wrapper {
-                width: 160px;
-                height: 160px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .message h1 {
-                font-size: 2rem;
-            }
-            
-            .message p {
-                font-size: 1rem;
-            }
-            
-            .logo-wrapper {
-                width: 140px;
-                height: 140px;
-            }
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ThriveAxis - Empowering Growth Through Innovation</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.jpg">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 </head>
 <body>
-    <section class="hero-section">
-        <div class="decoration">
-            <div class="circle circle-1"></div>
-            <div class="circle circle-2"></div>
-            <div class="circle circle-3"></div>
-            <div class="circle circle-4"></div>
-        </div>
-        
-        <div class="logo-container">
-            <div class="logo-wrapper">
-                <img src="logo-removebg.png" alt="ThriveAxis Logo">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="ThriveAxis Logo">
+                   <!-- <span>ThriveAxis</span> -->
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="blog.html" class="nav-link">Blog</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
         </div>
-        
-        <div class="message">
-            <h1>Your Wait Has <span class="gold-accent">Meaning</span></h1>
-            <p>We're crafting something extraordinary for you. Stay connected as we prepare to launch a transformative experience that will elevate your journey to new heights.</p>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+        <!--<img src="assets/images/hero-background.jpg" alt="Hero Background" loading="lazy">-->
+        <div id="particles-js"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Empowering Growth Through Innovation</h1>
+                <p class="hero-subtitle">We help Indian entrepreneurs leverage AI, analytics, and digital transformation to scale their businesses.</p>
+                <div class="hero-buttons">
+                    <a href="services.html" class="btn btn-primary">Our Services</a>
+                    <a href="contact.html" class="btn btn-secondary">Get Started</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
         </div>
     </section>
+
+<!-- Mission & Vision -->
+    <section class="mission-section about-mission">
+        <div class="container">
+            <h2 class="section-title">Our Guiding Principles</h2>
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="url(#gold-gradient)" stroke-width="2"/>
+                            <path d="M12 6V12L16 14" stroke="url(#gold-gradient)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Our Mission</h3>
+                    <p>To democratize access to advanced technology and strategic insights, enabling Indian entrepreneurs to compete on a global scale.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="url(#gold-gradient)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Our Vision</h3>
+                    <p>To become the premier growth partner for Indian businesses, driving innovation and economic transformation through technology.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="url(#gold-gradient)" stroke-width="2"/>
+                            <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="url(#gold-gradient)" stroke-width="2"/>
+                            <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="url(#gold-gradient)" stroke-width="2"/>
+                            <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="url(#gold-gradient)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Our Promise</h3>
+                    <p>To deliver exceptional value through transparent communication, ethical practices, and solutions that genuinely address our clients' unique challenges and aspirations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+   <!-- Services Preview -->
+<section class="services-preview">
+    <div class="container">
+        <h2 class="section-title">Our Core Services</h2>
+        <div class="services-grid">
+            <!-- Card 1 - Website Development -->
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="assets/images/services/web.jpg" alt="Website Development">
+                </div>
+                <div class="service-content">
+                    <h3>Website Development</h3>
+                    <a href="web-development.html" class="info-btn">GET MORE INFO</a>
+                </div>
+            </div>
+            
+            <!-- Card 2 - Business Analytics -->
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="assets/images/services/ba.jpg" alt="Business Analytics">
+                </div>
+                <div class="service-content">
+                    <h3>Business Analytics & Data Solutions</h3>
+                    <a href="services.html#business-analytics" class="info-btn">GET MORE INFO</a>
+                </div>
+            </div>
+            
+            <!-- Card 3 - Digital Marketing Service -->
+            <div class="service-card">
+              <div class="service-image">
+                  <img src="assets/images/services/digital marketing.png" alt="Digital Marketing">
+                 </div>
+                 <div class="service-content">
+                 <h3>Digital Marketing Services</h3>
+                 <a href="digital-marketing.html" class="info-btn">GET MORE INFO</a>
+                </div>
+             </div>
+            </section>
+            <!-- COMMENTED OUT CARDS 4, 5, 6 -->
+            <!--
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="assets/images/courses/AI Analytics.png" alt="AI Business Solutions">
+                </div>
+                <div class="service-content">
+                    <h3>AI Business Solutions</h3>
+                    <a href="#" class="info-btn">GET MORE INFO</a>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="assets/images/courses/AI Analytics.png" alt="AI Marketing">
+                </div>
+                <div class="service-content">
+                    <h3>AI Marketing Automation</h3>
+                    <a href="#" class="info-btn">GET MORE INFO</a>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="assets/images/courses/AI Analytics.png" alt="AI Analytics">
+                </div>
+                <div class="service-content">
+                    <h3>AI Data Analytics</h3>
+                    <a href="#" class="info-btn">GET MORE INFO</a>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+      -->
+<!-- </section> -->
+    
+<!-- Testimonial Section -->
+
+<section class="testimonials-section">
+  <div class="container">
+    <header class="testimonials-header">
+      <h1>Client Testimonials</h1>
+      <p class="subtitle">See what our clients have to say about their experience working with us</p>
+    </header>
+
+    <div class="testimonials-slider-container" id="sliderContainer">
+      <div class="testimonials-track" id="testimonialsTrack">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              Working with this team was an absolute pleasure. They delivered beyond our expectations and the project was completed ahead of schedule. Highly recommended!
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/Manisha mam.jpg" alt="Manisha Pagare">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Prof. Manisha Pagare</div>
+                <div class="testimonial-company">Finance Professor & Researcher.</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              The attention to detail and creative approach made all the difference. Our website traffic increased by 150% after the redesign. Exceptional work!
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/bhujbal mam.jpg" alt="Assistant Prof. Pratiksha Bhujbal">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Assistant Prof. Pratiksha Bhujbal</div>
+                <div class="testimonial-company">IT Professor & Researcher</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              Professional, responsive, and incredibly talented. They understood our vision and brought it to life in ways we couldn't have imagined.
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/nikhil sir.jpg" alt="Assistant Prof. Nikhil Dinesh Rokade">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Assistant Prof. Nikhil Dinesh Rokade</div>
+                <div class="testimonial-company">Operations & Supply Chain Management Specialist</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 4 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              From concept to completion, the process was seamless. The team was communicative and delivered exceptional quality work on time and within budget.
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client4.jpg" alt="Ms. Dipeeka Suresh Chavan">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Ms. Dipeeka Suresh Chavan</div>
+                <div class="testimonial-company">Commerce & Management Professor | PhD Research Scholar</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 5 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              Their strategic approach and technical expertise helped us solve complex challenges. The results have been transformative for our business.
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/Vaibhav.jpg" alt="Vaibhav Pagare">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Vaibhav Pagare</div>
+                <div class="testimonial-company">Healthy Bites</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 6 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              Outstanding service and remarkable creativity. They took our ideas and elevated them beyond what we thought was possible. Truly impressive!
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client6.jpg" alt="Raj Patel">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Raj Patel</div>
+                <div class="testimonial-company">Visionary Labs</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 7 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              The team's professionalism and dedication to quality are unmatched. They delivered a solution that perfectly aligned with our business goals.
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client7.jpg" alt="Priya Ray">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Priya Ray</div>
+                <div class="testimonial-company">Innovate Corp</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 8 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              Exceptional customer service and technical expertise. They were always available to answer questions and provide guidance throughout the project.
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client8.jpg" alt="Neha Sharma">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Neha Sharma</div>
+                <div class="testimonial-company">Digital Ventures</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 9 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              A truly collaborative partnership. They listened to our needs and delivered a solution that exceeded all our expectations. Fantastic work!
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client9.jpg" alt="Sonu Pandit">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Sonu Pandit</div>
+                <div class="testimonial-company">TechForward Inc.</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 10 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              The quality of work and attention to detail were exceptional. They transformed our digital presence and helped us reach new customers.
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client10.jpg" alt="Chetan Yadav">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Chetan Yadav</div>
+                <div class="testimonial-company">Growth Partners</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duplicate testimonials for seamless infinite scroll -->
+        <!-- First 5 testimonials duplicated -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              Working with this team was an absolute pleasure. They delivered beyond our expectations and the project was completed ahead of schedule. Highly recommended!
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client1.jpg" alt="Divya">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Divya</div>
+                <div class="testimonial-company">TechSolutions Inc.</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              The attention to detail and creative approach made all the difference. Our website traffic increased by 150% after the redesign. Exceptional work!
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client2.jpg" alt="Akshada">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Akshada</div>
+                <div class="testimonial-company">Global Innovations</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              Professional, responsive, and incredibly talented. They understood our vision and brought it to life in ways we couldn't have imagined.
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client3.jpg" alt="Rohit">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Rohit</div>
+                <div class="testimonial-company">Creative Minds Agency</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              From concept to completion, the process was seamless. The team was communicative and delivered exceptional quality work on time and within budget.
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client4.jpg" alt="Vaibhav">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Vaibhav</div>
+                <div class="testimonial-company">Future Enterprises</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              Their strategic approach and technical expertise helped us solve complex challenges. The results have been transformative for our business.
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <img src="assets/images/testimonials/client5.jpg" alt="Vaishnavi">
+              </div>
+              <div class="testimonial-info">
+                <div class="testimonial-name">Vaishnavi</div>
+                <div class="testimonial-company">NextGen Solutions</div>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slider-controls">
+      <button class="slider-btn" id="prevBtn">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="slider-btn" id="nextBtn">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+   
+<!-- Stats Section -->
+<!--<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" data-count="150">0</div>
+                <h3>Projects Completed</h3>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="75">0</div>
+                <h3>Happy Clients</h3>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="12">0</div>
+                <h3>Years Experience</h3>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="25">0</div>
+                <h3>Team Members</h3>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo.png" alt="ThriveAxis Logo">
+                        <!--<span>ThriveAxis</span>-->
+                    </div>
+                    <p>Empowering Indian entrepreneurs through AI, analytics, and digital transformation.</p>
+                    <div class="footer-social">
+                        <h4>Follow Us</h4>
+                        <div class="footer-social-icons">
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/facebook.png" alt="Facebook">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/twitter.svg" alt="Twitter">
+                            </a>
+                            <a href="https://www.linkedin.com/company/thriveaxis/about/?viewAsMember=true" class="footer-social-icon">
+                                <img src="assets/icons/linkedin.png" alt="LinkedIn">
+                            </a>
+                            <a href="https://www.instagram.com/thrive.axis?igsh=MXBpY3pqZmczaWU0MQ%3D%3D" class="footer-social-icon">
+                                <img src="assets/icons/instagram.jpg" alt="Instagram">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="services.html#digital-marketing">Digital Marketing</a></li>
+                        <li><a href="services.html#business-analytics">Business Analytics</a></li>
+                        <li><a href="services.html#web-development">Web Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>thriveaxis.agency@gmail.com</li>
+                        <li>+91 9199604078</li>
+                        <li>Nashik, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ThriveAxis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/three-animations.js"></script>
 </body>
-
 </html>
-

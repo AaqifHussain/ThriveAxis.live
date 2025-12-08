@@ -1,0 +1,200 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - ThriveAxis</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.jpg">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="ThriveAxis Logo">
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">Insights & Resources</h1>
+            <p class="page-subtitle">Stay updated with the latest trends in business analytics, digital marketing, and web development.</p>
+        </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section class="featured-post">
+        <div class="container">
+            <div class="featured-content">
+                <div class="featured-text">
+                    <span class="post-category">Featured</span>
+                    <h2>Business Analytics: Unlocking Insights for Success</h2>
+                    <p class="post-excerpt">Discover how business analytics is revolutionizing decision-making and driving growth in today’s competitive market.</p>
+                    <div class="post-meta">
+                        <span class="post-author">By Rajesh Sharma</span>
+                        <span class="post-date">October 15, 2023</span>
+                    </div>
+
+                    <!-- UPDATED LINK -->
+                    <a href="blog-business-analytics.html" class="btn btn-primary">Read Article</a>
+                </div>
+
+                <div class="featured-image">
+                    <a href="#"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0" alt="Data Visualization"></a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="blog-grid-section">
+        <div class="container">
+            <div class="blog-grid">
+
+                <!-- Business Analytics Blog -->
+                <article class="blog-card" data-category="analytics">
+                    <div class="blog-image">
+                        <a href="#"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800" alt="Data Visualization"></a>
+                        <span class="category-tag">Business Analytics</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3>Transforming Data into Business Insights</h3>
+                        <p class="blog-excerpt">How businesses can leverage data analytics to drive strategic decision-making and optimize operations.</p>
+                        <div class="blog-meta">
+                            <span class="blog-author">By Neha Gupta</span>
+                            <span class="blog-date">September 28, 2023</span>
+                        </div>
+
+                        <!-- UPDATED LINK -->
+                        <a href="blog-business-analytics.html" class="blog-link">Read More</a>
+                    </div>
+                </article>
+
+                <!-- Digital Marketing Blog -->
+                <article class="blog-card" data-category="marketing">
+                    <div class="blog-image">
+                        <a href="#"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800" alt="Digital Marketing Strategy"></a>
+                        <span class="category-tag">Digital Marketing</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3>Mastering Data-Driven Digital Marketing</h3>
+                        <p class="blog-excerpt">Explore how to harness data analytics in digital marketing for better targeting and enhanced ROI.</p>
+                        <div class="blog-meta">
+                            <span class="blog-author">By Arun Kumar</span>
+                            <span class="blog-date">October 5, 2023</span>
+                        </div>
+
+                        <!-- UPDATED LINK -->
+                        <a href="blog-digital-marketing.html" class="blog-link">Read More</a>
+                    </div>
+                </article>
+
+                <!-- Web Development Blog -->
+                <article class="blog-card" data-category="webdev">
+                    <div class="blog-image">
+                        <a href="#"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800" alt="Web Development Coding"></a>
+                        <span class="category-tag">Web Development</span>
+                    </div>
+                    <div class="blog-content">
+                        <h3>The Future of Web Development: Trends to Watch</h3>
+                        <p class="blog-excerpt">Learn about the latest web development technologies that will shape the future of user experience and business growth.</p>
+                        <div class="blog-meta">
+                            <span class="blog-author">By Rajesh Sharma</span>
+                            <span class="blog-date">September 30, 2023</span>
+                        </div>
+
+                        <!-- UPDATED LINK -->
+                        <a href="blog-web-development.html" class="blog-link">Read More</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+   <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo.png" alt="ThriveAxis Logo">
+                        <!--<span>ThriveAxis</span>-->
+                    </div>
+                    <p>Empowering Indian entrepreneurs through AI, analytics, and digital transformation.</p>
+                    <div class="footer-social">
+                        <h4>Follow Us</h4>
+                        <div class="footer-social-icons">
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/facebook.png" alt="Facebook">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/twitter.svg" alt="Twitter">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/linkedin.png" alt="LinkedIn">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/instagram.jpg" alt="Instagram">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="services.html#digital-marketing">Digital Marketing</a></li>
+                        <li><a href="services.html#business-analytics">Business Analytics</a></li>
+                        <li><a href="services.html#web-development">Web Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>thriveaxis.agency@gmail.com</li>
+                        <li>+91 9199604078</li>
+                        <li>Nashik, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ThriveAxis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/three-animations.js"></script>
+</body>
+</html>

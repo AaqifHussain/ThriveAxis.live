@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development – ThriveAxis</title>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="ThriveAxis Logo">
+                   <!-- <span>ThriveAxis</span> -->
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="blog.html" class="nav-link">Blog</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        
+        /* Colors: Navy Blue & Golden */
+        :root {
+            --primary-color: #0A2540; /* Navy Blue */
+            --secondary-color: #FFD700; /* Golden */
+            --text-color: #333;
+            --bg-light: #f9f9f9;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            padding: 60px 20px;
+            background: var(--primary-color);
+            color: #fff;
+            text-align: center;
+        }
+        .page-hero .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .page-hero .page-subtitle {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        /* Blog Details */
+        .blog-details {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .blog-detail-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+        .blog-details h2 {
+            margin-top: 20px;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        .blog-details h3 {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        .blog-details p,
+        .blog-details ul li {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+        .blog-details ul li::marker {
+            color: var(--secondary-color);
+        }
+
+        /* Button */
+        .btn-secondary {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn-secondary:hover {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero .page-title {
+                font-size: 2rem;
+            }
+            .blog-details h2 {
+                font-size: 1.7rem;
+            }
+            .blog-details h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+ <br>
+ <br>
+ <br>
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-title">The Future of Web Development</h1>
+        <p class="page-subtitle">Explore the technologies shaping modern websites and business platforms.</p>
+    </div>
+</section>
+
+<!-- Blog Content -->
+<section class="blog-details">
+    <div class="container">
+        <div class="blog-detail-content">
+
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=900" class="blog-detail-image" alt="Web Development">
+
+            <h2>Web Development in 2025</h2>
+            <p>Web development is rapidly evolving with the rise of AI tools, no-code platforms, and high-performance frameworks. Businesses now demand faster, more scalable, and highly interactive websites. Modern websites integrate analytics, personalization, and automation to drive engagement and conversions.</p>
+
+            <h3>Most Demanded Web Development Skills</h3>
+            <ul>
+                <li>React.js / Next.js Development</li>
+                <li>WordPress + Custom Themes</li>
+                <li>Responsive UI/UX Design</li>
+                <li>API Integration & Automation</li>
+                <li>AI-powered Web Tools</li>
+            </ul>
+
+            <h3>Why Modern Web Development Matters</h3>
+            <p>Customers expect fast-loading pages, clean UI, personalized experiences, and mobile optimization. Businesses that invest in modern development see better conversions, improved SEO, and higher customer satisfaction. Incorporating AI tools and analytics ensures continuous improvement and data-driven decision-making.</p>
+
+            <a href="blog.html" class="btn btn-secondary">Back to Blog</a>
+
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo.png" alt="ThriveAxis Logo">
+                        <!--<span>ThriveAxis</span>-->
+                    </div>
+                    <p>Empowering Indian entrepreneurs through AI, analytics, and digital transformation.</p>
+                    <div class="footer-social">
+                        <h4>Follow Us</h4>
+                        <div class="footer-social-icons">
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/facebook.png" alt="Facebook">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/twitter.svg" alt="Twitter">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/linkedin.png" alt="LinkedIn">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/instagram.jpg" alt="Instagram">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="services.html#digital-marketing">Digital Marketing</a></li>
+                        <li><a href="services.html#business-analytics">Business Analytics</a></li>
+                        <li><a href="services.html#web-development">Web Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>thriveaxis.agency@gmail.com</li>
+                        <li>+91 9199604078</li>
+                        <li>Nashik, India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ThriveAxis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

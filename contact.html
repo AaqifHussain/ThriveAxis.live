@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact ThriveAxis - Digital Transformation & AI Solutions for Indian Entrepreneurs</title>
+    <meta name="description" content="Transform your business with ThriveAxis. Get expert consultation on AI, analytics, web development & digital marketing. Contact our Nashik-based team today.">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.jpg">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        /* ===== CONTACT PAGE ENHANCEMENTS ===== */
+        
+        /* Enhanced Hero Section */
+        .contact-hero {
+            background: linear-gradient(135deg, 
+                rgba(6, 20, 46, 0.95) 0%, 
+                rgba(10, 31, 68, 0.92) 50%, 
+                rgba(6, 20, 46, 0.98) 100%),
+                url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .contact-hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.2rem);
+            margin-bottom: var(--space-md);
+            background: linear-gradient(135deg, var(--gold-light), #ffed4e, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        .page-subtitle {
+        color: white;
+        }
+
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .hero-cta-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            color: var(--navy);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: var(--space-lg);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* Contact Stats */
+        .contact-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+            flex-wrap: wrap;
+        }
+        
+        .stat-bubble {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: var(--space-md);
+            min-width: 180px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-bubble:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            border-color: var(--gold-light);
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            display: block;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        /* Enhanced Contact Section */
+        .enhanced-contact-section {
+            padding: var(--space-xxl) 0;
+            background: var(--light-gray);
+            position: relative;
+        }
+        
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: var(--space-xl);
+        }
+        
+        /* Contact Info Card */
+        .contact-info-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            height: fit-content;
+        }
+        
+        .contact-info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--radius-lg);
+            padding: 2px;
+            background: linear-gradient(135deg, var(--gold-light), var(--navy));
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: 1;
+        }
+        
+        .contact-info-card h2 {
+            color: var(--navy);
+            margin-bottom: var(--space-md);
+            font-size: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .info-subtitle {
+            color: var(--dark-gray);
+            margin-bottom: var(--space-xl);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Contact Details */
+        .contact-details-enhanced {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .contact-detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+            padding: var(--space-md);
+            background: var(--light-gray);
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-detail-item:hover {
+            transform: translateX(10px);
+            background: linear-gradient(90deg, var(--light-gray), rgba(255, 215, 0, 0.1));
+        }
+        
+        .detail-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--navy);
+            font-size: 1.2rem;
+        }
+        
+        .detail-content h4 {
+            color: var(--navy);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .detail-content p {
+            color: var(--dark-gray);
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .detail-note {
+            font-size: 0.85rem;
+            color: var(--gold);
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        
+        /* Business Hours */
+        .business-hours {
+            background: var(--navy);
+            color: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            margin-top: var(--space-xl);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hours-title {
+            color: var(--gold-light);
+            margin-bottom: var(--space-md);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .hours-list {
+            list-style: none;
+        }
+        
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Enhanced Form Card */
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+        
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: var(--radius-lg);
+            padding: 2px;
+            background: linear-gradient(135deg, var(--gold-light), var(--navy));
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: 1;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .form-header h2 {
+            color: var(--navy);
+            margin-bottom: var(--space-sm);
+            font-size: 1.8rem;
+        }
+        
+        .form-subtitle {
+            color: var(--dark-gray);
+            font-size: 1rem;
+        }
+        
+        /* Service Selection */
+        .service-selection {
+            margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .service-selection h4 {
+            color: var(--navy);
+            margin-bottom: var(--space-sm);
+            font-size: 1.1rem;
+        }
+        
+        .service-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .service-btn {
+            padding: 10px 18px;
+            background: var(--light-gray);
+            border: 2px solid var(--gray);
+            border-radius: var(--radius-md);
+            color: var(--dark-gray);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .service-btn:hover {
+            border-color: var(--gold);
+            color: var(--navy);
+        }
+        
+        .service-btn.active {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            color: var(--navy);
+            border-color: var(--gold);
+            font-weight: 600;
+        }
+        
+        /* Enhanced Form Styles */
+        .enhanced-form .form-group {
+            margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .enhanced-form input,
+        .enhanced-form select,
+        .enhanced-form textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--gray);
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--navy);
+            background: var(--white);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .enhanced-form input:focus,
+        .enhanced-form select:focus,
+        .enhanced-form textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+        }
+        
+        .enhanced-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+        
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            color: var(--navy);
+            border: none;
+            padding: 18px 40px;
+            border-radius: var(--radius-md);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        /* Success Message */
+        .success-message {
+            text-align: center;
+            padding: var(--space-xxl);
+            background: linear-gradient(135deg, #f0fff4, #e6ffed);
+            border-radius: var(--radius-lg);
+            border: 2px solid #38a169;
+            display: none;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #38a169;
+            margin-bottom: var(--space-lg);
+        }
+        
+        /* Trust Indicators */
+        .trust-indicators {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--space-xl);
+            padding: var(--space-lg);
+            background: var(--white);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gray);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        .trust-icon {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+        
+        /* Quick Contact Bar */
+        .quick-contact-bar {
+            background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+            color: var(--white);
+            padding: var(--space-md) 0;
+            position: sticky;
+            bottom: 0;
+            z-index: 100;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .quick-contact-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        .quick-contact-text {
+            font-weight: 500;
+        }
+        
+        .quick-contact-btn {
+            background: var(--gold);
+            color: var(--navy);
+            border: none;
+            padding: 10px 25px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-contact-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+        
+        /* Testimonial Section */
+        .contact-testimonials {
+            padding: var(--space-xxl) 0;
+            background: var(--white);
+        }
+        
+        .testimonial-quote {
+            font-size: 1.2rem;
+            color: var(--navy);
+            font-style: italic;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto var(--space-lg);
+            padding: var(--space-xl);
+            background: var(--light-gray);
+            border-radius: var(--radius-lg);
+            border-left: 5px solid var(--gold);
+            position: relative;
+        }
+        
+        .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--gold);
+            opacity: 0.3;
+            font-family: serif;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: var(--space-lg);
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-stats {
+                gap: var(--space-md);
+            }
+            
+            .stat-bubble {
+                min-width: 150px;
+                padding: var(--space-sm);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .contact-hero {
+                padding: 140px 0 80px;
+            }
+            
+            .service-buttons {
+                flex-direction: column;
+            }
+            
+            .service-btn {
+                min-width: 100%;
+            }
+            
+            .trust-indicators {
+                flex-direction: column;
+                gap: var(--space-md);
+                align-items: flex-start;
+            }
+            
+            .quick-contact-content {
+                flex-direction: column;
+                gap: var(--space-sm);
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .contact-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .contact-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-bubble {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="ThriveAxis Logo">
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="blog.html" class="nav-link">Blog</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Enhanced Contact Hero -->
+    <section class="contact-hero">
+        <div class="container contact-hero-content">
+            <div class="hero-cta-badge">
+                <i class="fas fa-bolt"></i> GET EXPERT CONSULTATION
+            </div>
+            <h1 class="page-title">Transform Your Business With ThriveAxis</h1>
+            <p class="page-subtitle">Schedule a free 30-minute strategy session with our AI & digital transformation experts. Discover how we can help scale your business with cutting-edge technology solutions.</p>
+            
+            <div class="contact-stats">
+                <div class="stat-bubble">
+                    <span class="stat-number">18-24h</span>
+                    <span class="stat-label">Response Time</span>
+                </div>
+                <div class="stat-bubble">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Client Satisfaction</span>
+                </div>
+                <div class="stat-bubble">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">Projects Delivered</span>
+                </div>
+                <div class="stat-bubble">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Indian Entrepreneurs</span>
+                </div>
+            </div>
+        </div>
+        <div id="contact-particles"></div>
+    </section>
+
+    <!-- Quick Contact Bar (Mobile) -->
+    <div class="quick-contact-bar" id="quickContactBar">
+        <div class="quick-contact-content">
+            <div class="quick-contact-text">
+                <i class="fas fa-clock"></i> Need immediate assistance?
+            </div>
+            <a href="tel:+919199604078" class="quick-contact-btn">
+                <i class="fas fa-phone"></i> Call Now
+            </a>
+        </div>
+    </div>
+
+    <!-- Enhanced Contact Section -->
+    <section class="enhanced-contact-section">
+        <div class="contact-container">
+            <!-- Contact Information Card -->
+            <div class="contact-info-card">
+                <h2>Why Choose ThriveAxis?</h2>
+                <p class="info-subtitle">We combine cutting-edge AI technology with deep understanding of Indian business challenges to deliver transformative solutions.</p>
+                
+                <div class="contact-details-enhanced">
+                    <div class="contact-detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>Our Headquarters</h4>
+                            <p>Nashik, Maharashtra, India</p>
+                            <p class="detail-note">Serving clients across India & globally</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>Email Address</h4>
+                            <p>thriveaxis.agency@gmail.com</p>
+                            <p>support@thriveaxis.com</p>
+                            <p class="detail-note">Response within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>Phone Number</h4>
+                            <p>+91 91996 04078</p>
+                            <p class="detail-note">Mon-Fri: 9 AM - 6 PM IST</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>WhatsApp Business</h4>
+                            <p>+91 91996 04078</p>
+                            <p class="detail-note">Quick responses for urgent queries</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="business-hours">
+                    <h4 class="hours-title">
+                        <i class="fas fa-clock"></i> Business Hours
+                    </h4>
+                    <ul class="hours-list">
+                        <li>
+                            <span>Monday - Friday</span>
+                            <span>9:00 AM - 6:00 PM</span>
+                        </li>
+                        <li>
+                            <span>Saturday</span>
+                            <span>10:00 AM - 4:00 PM</span>
+                        </li>
+                        <li>
+                            <span>Sunday</span>
+                            <span>Emergency Support Only</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="social-media" style="margin-top: var(--space-xl);">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons" style="display: flex; gap: 15px; margin-top: 15px;">
+                        <a href="#" class="social-icon" style="width: 40px; height: 40px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon" style="width: 40px; height: 40px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon" style="width: 40px; height: 40px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon" style="width: 40px; height: 40px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enhanced Contact Form -->
+            <div class="form-card">
+                <div class="form-header">
+                    <h2>Get Your Free Consultation</h2>
+                    <p class="form-subtitle">Complete the form below and we'll contact you within 24 hours</p>
+                </div>
+                
+                <!-- Success Message (Hidden by default) -->
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 style="color: #38a169; margin-bottom: var(--space-md);">Thank You! Your Message Has Been Sent</h3>
+                    <p>We've received your inquiry and will contact you within 24 hours. In the meantime, check your email for a confirmation message with next steps.</p>
+                    <p style="margin-top: var(--space-md); font-weight: 500;">
+                        <i class="fas fa-envelope"></i> Check your inbox for our automated confirmation
+                    </p>
+                </div>
+                
+                <!-- Contact Form -->
+                <form class="enhanced-form" id="enhancedContactForm" style="display: block;">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_subject" value="New Contact Form Submission - ThriveAxis">
+                    
+                    <div class="service-selection">
+                        <h4>I'm interested in:</h4>
+                        <div class="service-buttons">
+                            <button type="button" class="service-btn active" data-service="ai-analytics">AI & Business Analytics</button>
+                            <button type="button" class="service-btn" data-service="web-development">Web Development</button>
+                            <button type="button" class="service-btn" data-service="digital-marketing">Digital Marketing</button>
+                            <button type="button" class="service-btn" data-service="consultation">Strategy Consultation</button>
+                            <button type="button" class="service-btn" data-service="other">Other Service</button>
+                        </div>
+                        <input type="hidden" id="selectedService" name="service" value="AI & Business Analytics">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="firstName" placeholder="First Name *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="lastName" placeholder="Last Name *" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email Address *" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Phone Number (with country code)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" name="company" placeholder="Company Name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <select name="budget" required>
+                            <option value="" disabled selected>Select Your Project Budget *</option>
+                            <option value="Under ₹50,000">Under ₹50,000</option>
+                            <option value="₹50,000 - ₹1,00,000">₹50,000 - ₹1,00,000</option>
+                            <option value="₹1,00,000 - ₹5,00,000">₹1,00,000 - ₹5,00,000</option>
+                            <option value="₹5,00,000+">₹5,00,000+</option>
+                            <option value="Not sure">Not sure / Need consultation</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Tell us about your project, challenges, and goals... *" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div style="font-size: 0.9rem; color: var(--dark-gray); margin-bottom: 10px;">
+                            <input type="checkbox" id="newsletter" name="newsletter" checked style="margin-right: 8px;">
+                            <label for="newsletter">Subscribe to our newsletter for business growth tips</label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span id="btnText">Send Message & Get Free Consultation</span>
+                        <i class="fas fa-paper-plane" id="btnIcon"></i>
+                    </button>
+                    
+                    <div class="trust-indicators">
+                        <div class="trust-item">
+                            <i class="fas fa-shield-alt trust-icon"></i>
+                            <span>100% Secure & Confidential</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-lock trust-icon"></i>
+                            <span>No Spam Ever</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-handshake trust-icon"></i>
+                            <span>No Commitment Required</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+<input type="hidden" name="formTs" id="formTs">
+<script>
+  document.getElementById("formTs").value = Date.now();
+</script>
+
+    <!-- Testimonial Section -->
+    <section class="contact-testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Clients Say</h2>
+            <div class="testimonial-quote">
+                "ThriveAxis transformed our digital presence completely. Their AI-driven analytics helped us increase conversions by 300% in just 3 months. The team is responsive, professional, and truly understands the Indian market."
+            </div>
+            <div style="text-align: center; color: var(--gold); font-weight: 600;">
+                — Rajesh Sharma, Founder of TechGrow Solutions
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Contact Section -->
+<section class="map-section">
+    <div class="container">
+        <h2 class="section-title">Connect With Us</h2>
+        <p class="section-subtitle" style="margin-bottom: var(--space-xl);">
+            Reach out to our team for consultations, inquiries, or support.
+        </p>
+
+        <div class="map-container">
+            <div class="map-placeholder">
+                <div class="map-overlay">
+                    <div class="map-info">
+                        <h3>
+                            <i class="fas fa-globe" style="color: var(--gold-light); margin-right: 10px;"></i>
+                            ThriveAxis
+                        </h3>
+
+                        <p><i class="fas fa-map-marker-alt"></i> Nashik, Maharashtra, India</p>
+                        <p><i class="fas fa-phone"></i> +91 91996 04078</p>
+                        <p><i class="fas fa-envelope"></i> thriveaxis.agency@gmil.com</p>
+
+                        <p style="margin-top: var(--space-md);">
+                            <i class="fas fa-video"></i> Online consultations available<br>
+                            <i class="fas fa-clock"></i> Flexible appointment scheduling<br>
+                            <i class="fas fa-users"></i> Expert team ready to assist you
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo.png" alt="ThriveAxis Logo">
+                    </div>
+                    <p>Empowering Indian entrepreneurs through AI, analytics, and digital transformation.</p>
+                    <div class="footer-social">
+                        <h4>Follow Us</h4>
+                        <div class="footer-social-icons">
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/facebook.png" alt="Facebook">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/twitter.svg" alt="Twitter">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/linkedin.png" alt="LinkedIn">
+                            </a>
+                            <a href="#" class="footer-social-icon">
+                                <img src="assets/icons/instagram.jpg" alt="Instagram">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="services.html#digital-marketing">Digital Marketing</a></li>
+                        <li><a href="services.html#business-analytics">Business Analytics</a></li>
+                        <li><a href="services.html#web-development">Web Development</a></li>
+                        <li><a href="services.html#ai-solutions">AI Solutions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> thriveaxis.agency@gmil.com</li>
+                        <li><i class="fas fa-phone"></i> +91 91996 04078</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Nashik, India</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM IST</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ThriveAxis. All rights reserved. | <a href="privacy.html" style="color: var(--gold-light);">Privacy Policy</a> | <a href="terms.html" style="color: var(--gold-light);">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // Service Selection
+        document.querySelectorAll('.service-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.service-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('selectedService').value = this.textContent;
+            });
+        });
+        
+        // Quick Contact Bar Visibility
+        window.addEventListener('scroll', function() {
+            const quickContactBar = document.getElementById('quickContactBar');
+            if (window.innerWidth <= 768 && window.scrollY > 300) {
+                quickContactBar.style.display = 'block';
+            } else {
+                quickContactBar.style.display = 'none';
+            }
+        });
+        
+        // Enhanced Form Submission with Google Apps Script
+        document.getElementById('enhancedContactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const originalBtnText = btnText.textContent;
+            const originalBtnIcon = btnIcon.className;
+            
+            // Show loading state
+            btnText.textContent = 'Sending Your Message...';
+            btnIcon.className = 'fas fa-spinner fa-spin';
+            submitBtn.disabled = true;
+            
+            // Add timestamp
+            formData.append('timestamp', new Date().toISOString());
+            formData.append('pageUrl', window.location.href);
+            
+            // Your Google Apps Script Web App URL
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzcUsCKixj1khIw2FNaoSiLcGHlSyvi72I1YRCcsYEfYn7czil_cY99S_PYnAegC3R10Q/exec';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Important for Google Apps Script
+            })
+            .then(() => {
+                // Success - show confirmation
+                document.getElementById('enhancedContactForm').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Send automated email confirmation (this happens on Google Apps Script side)
+                // The Google Script will automatically send confirmation email
+                
+                // Log to console for debugging
+                console.log('Form submitted successfully');
+                
+                // Reset form after delay
+                setTimeout(() => {
+                    form.reset();
+                }, 5000);
+            })
+            .catch(error => {
+                // Error handling
+                console.error('Error:', error);
+                alert('There was an issue submitting your form. Please try again or contact us directly at thriveaxis.agency@gimail.com');
+                
+                // Reset button state
+                btnText.textContent = originalBtnText;
+                btnIcon.className = originalBtnIcon;
+                submitBtn.disabled = false;
+            });
+        });
+        
+        // Three.js Particles for Contact Hero
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof THREE !== 'undefined') {
+                initContactParticles();
+            }
+        });
+        
+        function initContactParticles() {
+            const container = document.getElementById('contact-particles');
+            if (!container) return;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const count = 1500;
+            const positions = new Float32Array(count * 3);
+            
+            for(let i = 0; i < count * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 50;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.05,
+                color: 0xffd700,
+                transparent: true,
+                opacity: 0.6
+            });
+            
+            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+            
+            camera.position.z = 5;
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.y += 0.001;
+                particles.rotation.x += 0.0005;
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', function() {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
