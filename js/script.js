@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollEffects();
     initFormHandlers();
     initFilterSystem();
-    initCounters();
+    initCounters(); // This won't run on contact page
     initOverlapPrevention();
     initHoverEffects();
     initHeroSlideshow();
     initContactAnimations();
-    initTouchOptimizations(); // New: Mobile touch optimizations
-    initMobileGestures(); // New: Mobile gestures
-    initViewportHandling(); // New: Viewport handling
+    initTouchOptimizations();
+    initMobileGestures();
+    initViewportHandling();
     
     // Initialize page-specific components
     if (document.querySelector('.digital-marketing-page')) {
@@ -28,12 +28,16 @@ document.addEventListener('DOMContentLoaded', function() {
         initServicesPage();
     }
     
-    if (document.querySelector('.contact-page')) {
-        initContactPage();
+    if (document.querySelector('.contact-page, .page-contact, .contact-hero')) {
+        initContactPage(); // This will call initContactCounters()
     }
     
     if (document.querySelector('.webdev-hero')) {
         initWebDevPage();
+    }
+    
+    if (document.querySelector('.about-hero')) {
+        initAboutPage();
     }
     
     console.log('ThriveAxis website initialized successfully');
@@ -340,7 +344,7 @@ function initScrollEffects() {
     if (window.innerWidth > 768) {
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
+            const hero = document.querySelector('.hero:not(.contact-hero)');
             if (hero) {
                 hero.style.transform = `translateY(${scrolled * 0.3}px)`;
             }
@@ -420,6 +424,162 @@ function initFormHandlers() {
     });
 }
 
+// ===== COUNTERS - MAIN FUNCTION =====
+function initCounters() {
+    // Skip contact page stats (they have their own counter)
+    if (document.querySelector('.contact-page, .page-contact, .contact-hero')) {
+        console.log('Skipping main counters on contact page');
+        return;
+    }
+    
+    const statNumbers = document.querySelectorAll('.stat-number:not(.contact-stats .stat-number)');
+    
+    if (statNumbers.length > 0) {
+        // Disable counter animation on mobile if performance is an issue
+        if (window.innerWidth <= 768) {
+            console.log('Counters disabled on mobile for performance');
+            // Still show the final numbers
+            statNumbers.forEach(stat => {
+                const count = parseInt(stat.getAttribute('data-count')) || parseInt(stat.textContent) || 0;
+                if (count > 0) {
+                    stat.textContent = count.toLocaleString();
+                }
+            });
+            return;
+        }
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const dataCount = target.getAttribute('data-count');
+                    const currentText = target.textContent;
+                    
+                    // Try to get count from data-count attribute, then from text content
+                    let count = 0;
+                    if (dataCount) {
+                        count = parseInt(dataCount);
+                    } else if (currentText && !isNaN(parseInt(currentText))) {
+                        count = parseInt(currentText);
+                        // Store it for animation
+                        target.setAttribute('data-count', count);
+                    }
+                    
+                    // Only animate if we have a valid count
+                    if (count > 0) {
+                        const duration = 2000;
+                        const step = count / (duration / 16);
+                        let current = 0;
+                        
+                        // Store original content if exists
+                        if (!target.hasAttribute('data-original')) {
+                            target.setAttribute('data-original', target.textContent);
+                        }
+                        
+                        const timer = setInterval(() => {
+                            current += step;
+                            if (current >= count) {
+                                current = count;
+                                clearInterval(timer);
+                            }
+                            target.textContent = Math.floor(current).toLocaleString();
+                        }, 16);
+                        
+                        observer.unobserve(target);
+                    } else {
+                        // If no valid count, leave as is
+                        observer.unobserve(target);
+                    }
+                }
+            });
+        }, { 
+            threshold: 0.5,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        statNumbers.forEach(stat => observer.observe(stat));
+    }
+}
+
+// ===== CONTACT PAGE COUNTERS =====
+function initContactCounters() {
+    // Only run on contact page
+    const contactPageIndicator = document.querySelector('.contact-page, .page-contact, .contact-hero');
+    if (!contactPageIndicator) {
+        console.log('Not a contact page, skipping contact counters');
+        return;
+    }
+    
+    console.log('Initializing contact page counters');
+    
+    // Find all stat numbers in contact page
+    const contactStatNumbers = document.querySelectorAll('.contact-stats .stat-number, .contact-hero .stat-number, .stats-container .stat-number');
+    
+    if (contactStatNumbers.length === 0) {
+        console.log('No contact stat numbers found');
+        return;
+    }
+    
+    // Contact page specific values
+    const contactValues = [24, 98, 150, 50];
+    const suffixes = ['', '%', '+', '+'];
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const index = Array.from(contactStatNumbers).indexOf(target);
+                
+                if (index !== -1 && contactValues[index] !== undefined) {
+                    const value = contactValues[index];
+                    const suffix = suffixes[index] || '';
+                    
+                    // Disable animation on mobile for performance
+                    if (window.innerWidth <= 768) {
+                        target.textContent = value + suffix;
+                        observer.unobserve(target);
+                        return;
+                    }
+                    
+                    const duration = 2000;
+                    const step = value / (duration / 16);
+                    let current = 0;
+                    
+                    // Store original value
+                    if (!target.hasAttribute('data-original')) {
+                        target.setAttribute('data-original', value);
+                    }
+                    
+                    // Set initial to 0
+                    target.textContent = '0' + suffix;
+                    
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= value) {
+                            current = value;
+                            clearInterval(timer);
+                        }
+                        target.textContent = Math.floor(current) + suffix;
+                    }, 16);
+                    
+                    observer.unobserve(target);
+                }
+            }
+        });
+    }, { 
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    contactStatNumbers.forEach((stat, index) => {
+        // Set data-count attribute for reference
+        if (contactValues[index] !== undefined) {
+            stat.setAttribute('data-count', contactValues[index]);
+        }
+        observer.observe(stat);
+    });
+}
+
 // ===== FILTER SYSTEM =====
 function initFilterSystem() {
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -483,61 +643,6 @@ function initFilterSystem() {
     }
 }
 
-// ===== COUNTERS =====
-
-// ===== CONTACT PAGE COUNTERS =====
-function initContactCounters() {
-    // Only run on contact page
-    if (!document.querySelector('.contact-hero')) return;
-    
-    const contactStats = [
-        { element: '.response-time', value: 24, suffix: '' },
-        { element: '.client-satisfaction', value: 98, suffix: '%' },
-        { element: '.projects-delivered', value: 150, suffix: '+' },
-        { element: '.indian-entrepreneurs', value: 50, suffix: '+' }
-    ];
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = entry.target;
-                const stat = contactStats.find(s => 
-                    target.classList.contains(s.element.replace('.', ''))
-                );
-                
-                if (stat) {
-                    const duration = 2000;
-                    const step = stat.value / (duration / 16);
-                    let current = 0;
-                    
-                    const timer = setInterval(() => {
-                        current += step;
-                        if (current >= stat.value) {
-                            current = stat.value;
-                            clearInterval(timer);
-                        }
-                        target.textContent = Math.floor(current) + stat.suffix;
-                    }, 16);
-                    
-                    observer.unobserve(target);
-                }
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    contactStats.forEach(stat => {
-        const element = document.querySelector(stat.element);
-        if (element) observer.observe(element);
-    });
-}
-
-// Add this to your contact page initialization
-function initContactPage() {
-    // ... existing contact page code ...
-    initContactCounters(); // Add this line
-    // ... rest of your contact page code ...
-}
-
 // ===== HOVER EFFECTS =====
 function initHoverEffects() {
     const serviceCards = document.querySelectorAll('.service-card');
@@ -597,7 +702,7 @@ function initOverlapPrevention() {
 
 function adjustHeroContent() {
     const heroContent = document.querySelector('.hero-content');
-    const hero = document.querySelector('.hero');
+    const hero = document.querySelector('.hero:not(.contact-hero)');
     
     if (heroContent && hero) {
         const heroHeight = hero.offsetHeight;
@@ -615,8 +720,12 @@ function adjustHeroContent() {
 
 // ===== HERO SLIDESHOW =====
 function initHeroSlideshow() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
+    // Only run on main hero sections, not contact page
+    const hero = document.querySelector('.hero:not(.contact-hero)');
+    if (!hero) {
+        console.log('No hero section found or on contact page');
+        return;
+    }
     
     // Mobile-optimized image sizes
     const isMobile = window.innerWidth <= 768;
@@ -707,7 +816,12 @@ function initHeroSlideshow() {
         startAutomaticSlideshow();
         
         hero.addEventListener('click', handleHeroClick);
-        hero.addEventListener('touchstart', handleHeroClick);
+        hero.addEventListener('touchstart', function(e) {
+            if (!e.target.classList.contains('hero-dot')) {
+                e.preventDefault();
+                handleHeroClick(e);
+            }
+        });
     }
 
     init();
@@ -1295,10 +1409,6 @@ function initFAQ() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    initFAQ();
-});
-
 // ===== DIGITAL MARKETING PAGE =====
 function initDigitalMarketingPage() {
     // FAQ Toggle Functionality
@@ -1476,6 +1586,9 @@ function initContactPage() {
         });
     }
     
+    // Initialize contact page counters
+    initContactCounters();
+    
     console.log('Contact page initialized successfully');
 }
 
@@ -1486,7 +1599,7 @@ function initAboutPage() {
     initAboutCounters();
     initTeamCardEffects();
     initAboutAnimations();
-    initSmoothScrolling();
+    initAboutSmoothScrolling();
 }
 
 function initAboutCounters() {
@@ -1623,7 +1736,7 @@ function initAboutAnimations() {
     animatedElements.forEach(el => observer.observe(el));
 }
 
-function initSmoothScrolling() {
+function initAboutSmoothScrolling() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (anchor.classList.contains('btn') || anchor.getAttribute('href') === '#') {
             return;
@@ -1859,7 +1972,7 @@ window.ThriveAxis.digitalMarketing = {
         }
     },
     initFAQ: initFAQ,
-    initSmoothScrolling: initSmoothScrolling
+    initSmoothScrolling: initAboutSmoothScrolling
 };
 
 window.ThriveAxis.utils = {
@@ -1876,12 +1989,7 @@ window.ThriveAxis.pages = {
     initWebDev: initWebDevPage
 };
 
-// Initialize about page if on about page
-if (document.querySelector('.about-hero')) {
-    document.addEventListener('DOMContentLoaded', initAboutPage);
-}
-
-// Contact page particles (your original code)
+// ===== CONTACT PARTICLES =====
 function initContactParticles() {
     const canvas = document.getElementById('contact-particles');
     if (!canvas) return;
@@ -1943,4 +2051,3 @@ if (document.getElementById('contact-particles')) {
 }
 
 console.log('ThriveAxis mobile-optimized script loaded successfully');
-
