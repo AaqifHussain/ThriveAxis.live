@@ -719,6 +719,7 @@ function adjustHeroContent() {
 }
 
 // ===== HERO SLIDESHOW =====
+
 function initHeroSlideshow() {
     // Only run on main hero sections, not contact page
     const hero = document.querySelector('.hero:not(.contact-hero)');
@@ -744,6 +745,12 @@ function initHeroSlideshow() {
     let slideshowInterval;
     let dotsContainer;
     let dots = [];
+    
+    // Variables to detect if it's a click/tap or scroll
+    let touchStartY = 0;
+    let touchEndY = 0;
+    let isScrolling = false;
+    let scrollTimer;
 
     function setInitialBackground() {
         hero.style.background = `linear-gradient(rgba(6, 20, 46, 0.7), rgba(6, 20, 46, 0.75)), url('${images[0]}') no-repeat center center/cover`;
@@ -795,7 +802,8 @@ function initHeroSlideshow() {
     }
 
     function handleHeroClick(e) {
-        if (!e.target.classList.contains('hero-dot')) {
+        // Only change slide if it's a deliberate click/tap (not scroll)
+        if (!isScrolling && !e.target.classList.contains('hero-dot')) {
             changeBackground();
             startAutomaticSlideshow();
         }
@@ -810,17 +818,71 @@ function initHeroSlideshow() {
         slideshowInterval = setInterval(changeBackground, interval);
     }
 
+    // Detect scrolling vs tapping
+    function handleTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+        isScrolling = false;
+        
+        // Clear any existing timer
+        if (scrollTimer) clearTimeout(scrollTimer);
+        
+        // Set a timer to detect if it's a scroll
+        scrollTimer = setTimeout(() => {
+            isScrolling = true;
+        }, 100); // 100ms threshold for scroll detection
+    }
+    
+    function handleTouchMove(e) {
+        touchEndY = e.touches[0].clientY;
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        
+        // If vertical movement > 10px, it's probably a scroll
+        if (deltaY > 10) {
+            isScrolling = true;
+            if (scrollTimer) clearTimeout(scrollTimer);
+        }
+    }
+    
+    function handleTouchEnd(e) {
+        if (!isScrolling && !e.target.classList.contains('hero-dot')) {
+            // It's a tap, change slide
+            e.preventDefault();
+            changeBackground();
+            startAutomaticSlideshow();
+        }
+        
+        // Reset after 500ms
+        setTimeout(() => {
+            isScrolling = false;
+        }, 500);
+    }
+
     function init() {
         setInitialBackground();
         createDots();
         startAutomaticSlideshow();
         
+        // Desktop click event
         hero.addEventListener('click', handleHeroClick);
-        hero.addEventListener('touchstart', function(e) {
-            if (!e.target.classList.contains('hero-dot')) {
-                e.preventDefault();
-                handleHeroClick(e);
-            }
+        
+        // Mobile touch events with scroll detection
+        hero.addEventListener('touchstart', handleTouchStart, { passive: true });
+        hero.addEventListener('touchmove', handleTouchMove, { passive: true });
+        hero.addEventListener('touchend', handleTouchEnd, { passive: false });
+        
+        // Also detect wheel/mouse scroll
+        hero.addEventListener('wheel', function() {
+            isScrolling = true;
+            setTimeout(() => {
+                isScrolling = false;
+            }, 500);
+        });
+        
+        hero.addEventListener('scroll', function() {
+            isScrolling = true;
+            setTimeout(() => {
+                isScrolling = false;
+            }, 500);
         });
     }
 
@@ -839,6 +901,69 @@ function initHeroSlideshow() {
             initHeroSlideshow();
         }
     });
+}
+
+// ===== SCROLL EFFECTS - UPDATED =====
+function initScrollEffects() {
+    // Disable parallax on mobile for performance
+    if (window.innerWidth > 768) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero:not(.contact-hero)');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    }
+    
+    // Smooth scrolling for anchor links - optimized for mobile
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            
+            if (targetId === '#') return;
+            
+            e.preventDefault();
+            const target = document.querySelector(targetId);
+            
+            if (target) {
+                // Close mobile menu if open
+                if (window.innerWidth <= 768) {
+                    const hamburger = document.querySelector('.hamburger.active');
+                    if (hamburger) {
+                        hamburger.classList.remove('active');
+                        document.querySelector('.nav-menu').classList.remove('active');
+                        document.body.classList.remove('menu-open');
+                    }
+                }
+                
+                const offset = window.innerWidth <= 768 ? 80 : 100;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Ensure scrolling works on hero section
+    const hero = document.querySelector('.hero:not(.contact-hero)');
+    if (hero) {
+        // Make hero section scrollable
+        hero.style.touchAction = 'pan-y';
+        hero.style.overscrollBehavior = 'contain';
+        
+        // Prevent hero section from interfering with page scroll
+        hero.addEventListener('wheel', function(e) {
+            // Allow normal wheel scrolling
+        }, { passive: true });
+        
+        hero.addEventListener('touchmove', function(e) {
+            // Allow normal touch scrolling
+        }, { passive: true });
+    }
 }
 
 // ===== MOBILE NOTIFICATION =====
@@ -2051,3 +2176,4 @@ if (document.getElementById('contact-particles')) {
 }
 
 console.log('ThriveAxis mobile-optimized script loaded successfully');
+
