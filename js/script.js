@@ -484,35 +484,58 @@ function initFilterSystem() {
 }
 
 // ===== COUNTERS =====
-function initCounters() {
-    const statNumbers = document.querySelectorAll('.stat-number');
+
+// ===== CONTACT PAGE COUNTERS =====
+function initContactCounters() {
+    // Only run on contact page
+    if (!document.querySelector('.contact-hero')) return;
     
-    if (statNumbers.length > 0) {
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const target = entry.target;
-                    const count = parseInt(target.getAttribute('data-count')) || 1000;
+    const contactStats = [
+        { element: '.response-time', value: 24, suffix: '' },
+        { element: '.client-satisfaction', value: 98, suffix: '%' },
+        { element: '.projects-delivered', value: 150, suffix: '+' },
+        { element: '.indian-entrepreneurs', value: 50, suffix: '+' }
+    ];
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const stat = contactStats.find(s => 
+                    target.classList.contains(s.element.replace('.', ''))
+                );
+                
+                if (stat) {
                     const duration = 2000;
-                    const step = count / (duration / 16);
+                    const step = stat.value / (duration / 16);
                     let current = 0;
                     
                     const timer = setInterval(() => {
                         current += step;
-                        if (current >= count) {
-                            current = count;
+                        if (current >= stat.value) {
+                            current = stat.value;
                             clearInterval(timer);
                         }
-                        target.textContent = Math.floor(current).toLocaleString();
+                        target.textContent = Math.floor(current) + stat.suffix;
                     }, 16);
                     
                     observer.unobserve(target);
                 }
-            });
-        }, { threshold: 0.5 });
-        
-        statNumbers.forEach(stat => observer.observe(stat));
-    }
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    contactStats.forEach(stat => {
+        const element = document.querySelector(stat.element);
+        if (element) observer.observe(element);
+    });
+}
+
+// Add this to your contact page initialization
+function initContactPage() {
+    // ... existing contact page code ...
+    initContactCounters(); // Add this line
+    // ... rest of your contact page code ...
 }
 
 // ===== HOVER EFFECTS =====
@@ -1920,3 +1943,4 @@ if (document.getElementById('contact-particles')) {
 }
 
 console.log('ThriveAxis mobile-optimized script loaded successfully');
+
