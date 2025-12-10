@@ -1,5 +1,4 @@
-// Main JavaScript file for ThriveAxis website
-// Enhanced for mobile responsiveness
+// Main JavaScript file for ThriveAxis website - Mobile Optimized
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded - initializing ThriveAxis');
@@ -10,14 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollEffects();
     initFormHandlers();
     initFilterSystem();
-    initCounters(); // This won't run on contact page
+    initCounters();
     initOverlapPrevention();
     initHoverEffects();
     initHeroSlideshow();
     initContactAnimations();
-    initTouchOptimizations();
-    initMobileGestures();
-    initViewportHandling();
+    
+    // Initialize mobile-specific features
+    initMobileOptimizations();
     
     // Initialize page-specific components
     if (document.querySelector('.digital-marketing-page')) {
@@ -28,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
         initServicesPage();
     }
     
-    if (document.querySelector('.contact-page, .page-contact, .contact-hero')) {
-        initContactPage(); // This will call initContactCounters()
+    if (document.querySelector('.contact-page')) {
+        initContactPage();
     }
     
     if (document.querySelector('.webdev-hero')) {
@@ -44,22 +43,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ===== MOBILE OPTIMIZATIONS =====
-function initTouchOptimizations() {
-    // Increase touch target sizes for mobile
+function initMobileOptimizations() {
+    // Add mobile-specific touch optimizations
+    initTouchTargets();
+    initViewportHandling();
+    injectMobileStyles();
+}
+
+function initTouchTargets() {
+    // Ensure all interactive elements are touch-friendly (minimum 44x44px)
     const touchElements = document.querySelectorAll('button, .nav-link, .filter-btn, .hero-dot, .faq-question, .tab-button, .testimonial-card');
     
     touchElements.forEach(element => {
-        // Add touch-specific class for styling
         element.classList.add('touch-optimized');
         
-        // Prevent double-tap zoom on iOS
-        element.addEventListener('touchstart', function(e) {
-            if (e.touches.length > 1) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-        
-        // Add active state for touch feedback
+        // Add touch feedback
         element.addEventListener('touchstart', function() {
             this.classList.add('touch-active');
         });
@@ -69,7 +67,7 @@ function initTouchOptimizations() {
         });
     });
     
-    // Prevent text selection on tap
+    // Prevent double-tap zoom on iOS for buttons
     document.addEventListener('touchstart', function(e) {
         if (e.touches.length > 1) {
             e.preventDefault();
@@ -77,58 +75,10 @@ function initTouchOptimizations() {
     }, { passive: false });
 }
 
-function initMobileGestures() {
-    // Handle swipe gestures for mobile navigation
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let touchStartY = 0;
-    let touchEndY = 0;
-    
-    document.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-        touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-    
-    document.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        touchEndY = e.changedTouches[0].screenY;
-        handleSwipe();
-    }, { passive: true });
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const verticalThreshold = 100;
-        const deltaX = touchEndX - touchStartX;
-        const deltaY = touchEndY - touchStartY;
-        
-        // Only handle horizontal swipes if vertical movement is minimal
-        if (Math.abs(deltaY) < verticalThreshold) {
-            if (Math.abs(deltaX) > swipeThreshold) {
-                if (deltaX > 0) {
-                    // Swipe right - close mobile menu if open
-                    const navMenu = document.querySelector('.nav-menu.active');
-                    if (navMenu && window.innerWidth <= 768) {
-                        document.querySelector('.hamburger').classList.remove('active');
-                        navMenu.classList.remove('active');
-                        document.body.classList.remove('menu-open');
-                    }
-                } else {
-                    // Swipe left - could be used for other interactions
-                }
-            }
-        }
-    }
-}
-
 function initViewportHandling() {
     // Prevent zoom on form inputs in iOS
     const inputs = document.querySelectorAll('input, textarea, select');
     inputs.forEach(input => {
-        input.addEventListener('touchstart', function() {
-            // Prevent zoom but allow focus
-        }, { passive: true });
-        
-        // iOS zoom prevention
         input.addEventListener('focus', function() {
             this.style.fontSize = '16px';
         });
@@ -151,6 +101,96 @@ function initViewportHandling() {
     setVH();
 }
 
+function injectMobileStyles() {
+    const styles = `
+        /* Mobile touch optimizations */
+        .touch-optimized {
+            min-height: 44px;
+            min-width: 44px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .touch-active {
+            opacity: 0.8;
+            transform: scale(0.98);
+            transition: transform 0.1s ease, opacity 0.1s ease;
+        }
+        
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-slideshow-dots {
+                bottom: 20px;
+            }
+            
+            .hero-dot {
+                width: 10px;
+                height: 10px;
+                margin: 0 6px;
+            }
+            
+            .testimonial-card {
+                min-width: 85vw;
+                margin: 0 10px;
+            }
+            
+            /* Improve form inputs on mobile */
+            input, textarea, select {
+                font-size: 16px !important;
+            }
+            
+            .package-card, .service-card, .team-card {
+                margin: 10px 0;
+            }
+            
+            .faq-question {
+                padding: 15px;
+            }
+            
+            .tab-button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+            
+            /* Fix parallax on mobile */
+            .hero {
+                transform: none !important;
+            }
+            
+            /* Ensure proper scrolling */
+            body {
+                overflow-x: hidden;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem !important;
+            }
+            
+            .section-title {
+                font-size: 1.8rem !important;
+            }
+            
+            .package-card {
+                padding: 20px;
+            }
+            
+            .process-step {
+                padding: 15px;
+            }
+        }
+    `;
+    
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = styles;
+    document.head.appendChild(styleSheet);
+}
+
 // ===== NAVIGATION =====
 function initNavigation() {
     const hamburger = document.querySelector('.hamburger');
@@ -158,33 +198,29 @@ function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     
     if (hamburger) {
-        // Touch event for mobile
+        // Mobile touch support
         hamburger.addEventListener('touchstart', function(e) {
             e.preventDefault();
             this.classList.toggle('active');
             navMenu.classList.toggle('active');
-            document.body.classList.toggle('menu-open');
         });
         
-        // Click event for desktop
         hamburger.addEventListener('click', function() {
             this.classList.toggle('active');
             navMenu.classList.toggle('active');
-            document.body.classList.toggle('menu-open');
         });
     }
     
-    // Close mobile menu when clicking on a link - enhanced for touch
+    // Close mobile menu when clicking on a link
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
             if (hamburger && window.innerWidth <= 768) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
-                document.body.classList.remove('menu-open');
             }
         });
         
-        // Add touch feedback
+        // Mobile touch feedback
         link.addEventListener('touchstart', function() {
             this.classList.add('touch-active');
         });
@@ -200,39 +236,20 @@ function initNavigation() {
             if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
-                document.body.classList.remove('menu-open');
             }
         }
     });
     
     // Navbar scroll effect with mobile optimization
-    let lastScrollTop = 0;
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
         if (navbar) {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > 100) {
+            if (window.scrollY > 100) {
                 navbar.style.background = 'rgba(6, 20, 46, 0.98)';
-                navbar.style.padding = window.innerWidth <= 768 ? '0.5rem 0' : '0.75rem 0';
-                
-                // Hide/show navbar on scroll for mobile
-                if (window.innerWidth <= 768) {
-                    if (scrollTop > lastScrollTop && scrollTop > 200) {
-                        // Scrolling down - hide navbar
-                        navbar.style.transform = 'translateY(-100%)';
-                        navbar.style.transition = 'transform 0.3s ease';
-                    } else {
-                        // Scrolling up - show navbar
-                        navbar.style.transform = 'translateY(0)';
-                        navbar.style.transition = 'transform 0.3s ease';
-                    }
-                    lastScrollTop = scrollTop;
-                }
+                navbar.style.padding = window.innerWidth <= 768 ? '0.5rem 0' : '0.5rem 0';
             } else {
                 navbar.style.background = 'rgba(6, 20, 46, 0.95)';
                 navbar.style.padding = window.innerWidth <= 768 ? '1rem 0' : '1rem 0';
-                navbar.style.transform = 'translateY(0)';
             }
         }
     });
@@ -242,25 +259,23 @@ function initNavigation() {
         if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('active')) {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
-            document.body.classList.remove('menu-open');
         }
     });
 }
 
 // ===== ANIMATIONS =====
 function initAnimations() {
-    // Reduce animations on mobile for performance
+    // Mobile-optimized animation settings
     const isMobile = window.innerWidth <= 768;
     
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
         
-        // Mobile-optimized GSAP settings
+        // Reduce animations on mobile for performance
         if (isMobile) {
             gsap.config({
                 force3D: false,
-                autoSleep: 60,
-                nullTargetWarn: false
+                autoSleep: 60
             });
         }
         
@@ -292,8 +307,7 @@ function initAnimations() {
                 trigger: '.services-preview',
                 start: isMobile ? 'top 90%' : 'top 80%',
                 end: 'bottom 20%',
-                toggleActions: 'play none none reverse',
-                markers: false
+                toggleActions: 'play none none reverse'
             },
             duration: isMobile ? 0.6 : 0.8,
             y: isMobile ? 30 : 50,
@@ -344,7 +358,7 @@ function initScrollEffects() {
     if (window.innerWidth > 768) {
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero:not(.contact-hero)');
+            const hero = document.querySelector('.hero');
             if (hero) {
                 hero.style.transform = `translateY(${scrolled * 0.3}px)`;
             }
@@ -368,7 +382,6 @@ function initScrollEffects() {
                     if (hamburger) {
                         hamburger.classList.remove('active');
                         document.querySelector('.nav-menu').classList.remove('active');
-                        document.body.classList.remove('menu-open');
                     }
                 }
                 
@@ -389,20 +402,6 @@ function initFormHandlers() {
     const forms = document.querySelectorAll('form');
     
     forms.forEach(form => {
-        // Prevent zoom on focus in iOS
-        const inputs = form.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('touchstart', function() {
-                this.style.fontSize = '16px';
-            });
-            
-            input.addEventListener('blur', function() {
-                setTimeout(() => {
-                    this.style.fontSize = '';
-                }, 100);
-            });
-        });
-        
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -414,169 +413,17 @@ function initFormHandlers() {
                 submitBtn.disabled = true;
                 
                 setTimeout(() => {
-                    showMobileNotification('Message sent successfully!', 'success');
+                    // Mobile-friendly notification
+                    const isMobile = window.innerWidth <= 768;
+                    const message = isMobile ? 'Message sent!' : 'Message sent successfully!';
+                    alert(message);
+                    
                     this.reset();
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                 }, 1500);
             }
         });
-    });
-}
-
-// ===== COUNTERS - MAIN FUNCTION =====
-function initCounters() {
-    // Skip contact page stats (they have their own counter)
-    if (document.querySelector('.contact-page, .page-contact, .contact-hero')) {
-        console.log('Skipping main counters on contact page');
-        return;
-    }
-    
-    const statNumbers = document.querySelectorAll('.stat-number:not(.contact-stats .stat-number)');
-    
-    if (statNumbers.length > 0) {
-        // Disable counter animation on mobile if performance is an issue
-        if (window.innerWidth <= 768) {
-            console.log('Counters disabled on mobile for performance');
-            // Still show the final numbers
-            statNumbers.forEach(stat => {
-                const count = parseInt(stat.getAttribute('data-count')) || parseInt(stat.textContent) || 0;
-                if (count > 0) {
-                    stat.textContent = count.toLocaleString();
-                }
-            });
-            return;
-        }
-        
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const target = entry.target;
-                    const dataCount = target.getAttribute('data-count');
-                    const currentText = target.textContent;
-                    
-                    // Try to get count from data-count attribute, then from text content
-                    let count = 0;
-                    if (dataCount) {
-                        count = parseInt(dataCount);
-                    } else if (currentText && !isNaN(parseInt(currentText))) {
-                        count = parseInt(currentText);
-                        // Store it for animation
-                        target.setAttribute('data-count', count);
-                    }
-                    
-                    // Only animate if we have a valid count
-                    if (count > 0) {
-                        const duration = 2000;
-                        const step = count / (duration / 16);
-                        let current = 0;
-                        
-                        // Store original content if exists
-                        if (!target.hasAttribute('data-original')) {
-                            target.setAttribute('data-original', target.textContent);
-                        }
-                        
-                        const timer = setInterval(() => {
-                            current += step;
-                            if (current >= count) {
-                                current = count;
-                                clearInterval(timer);
-                            }
-                            target.textContent = Math.floor(current).toLocaleString();
-                        }, 16);
-                        
-                        observer.unobserve(target);
-                    } else {
-                        // If no valid count, leave as is
-                        observer.unobserve(target);
-                    }
-                }
-            });
-        }, { 
-            threshold: 0.5,
-            rootMargin: '0px 0px -50px 0px'
-        });
-        
-        statNumbers.forEach(stat => observer.observe(stat));
-    }
-}
-
-// ===== CONTACT PAGE COUNTERS =====
-function initContactCounters() {
-    // Only run on contact page
-    const contactPageIndicator = document.querySelector('.contact-page, .page-contact, .contact-hero');
-    if (!contactPageIndicator) {
-        console.log('Not a contact page, skipping contact counters');
-        return;
-    }
-    
-    console.log('Initializing contact page counters');
-    
-    // Find all stat numbers in contact page
-    const contactStatNumbers = document.querySelectorAll('.contact-stats .stat-number, .contact-hero .stat-number, .stats-container .stat-number');
-    
-    if (contactStatNumbers.length === 0) {
-        console.log('No contact stat numbers found');
-        return;
-    }
-    
-    // Contact page specific values
-    const contactValues = [24, 98, 150, 50];
-    const suffixes = ['', '%', '+', '+'];
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = entry.target;
-                const index = Array.from(contactStatNumbers).indexOf(target);
-                
-                if (index !== -1 && contactValues[index] !== undefined) {
-                    const value = contactValues[index];
-                    const suffix = suffixes[index] || '';
-                    
-                    // Disable animation on mobile for performance
-                    if (window.innerWidth <= 768) {
-                        target.textContent = value + suffix;
-                        observer.unobserve(target);
-                        return;
-                    }
-                    
-                    const duration = 2000;
-                    const step = value / (duration / 16);
-                    let current = 0;
-                    
-                    // Store original value
-                    if (!target.hasAttribute('data-original')) {
-                        target.setAttribute('data-original', value);
-                    }
-                    
-                    // Set initial to 0
-                    target.textContent = '0' + suffix;
-                    
-                    const timer = setInterval(() => {
-                        current += step;
-                        if (current >= value) {
-                            current = value;
-                            clearInterval(timer);
-                        }
-                        target.textContent = Math.floor(current) + suffix;
-                    }, 16);
-                    
-                    observer.unobserve(target);
-                }
-            }
-        });
-    }, { 
-        threshold: 0.5,
-        rootMargin: '0px 0px -50px 0px'
-    });
-    
-    contactStatNumbers.forEach((stat, index) => {
-        // Set data-count attribute for reference
-        if (contactValues[index] !== undefined) {
-            stat.setAttribute('data-count', contactValues[index]);
-        }
-        observer.observe(stat);
     });
 }
 
@@ -588,6 +435,7 @@ function initFilterSystem() {
     if (filterBtns.length === 0 || blogCards.length === 0) return;
     
     filterBtns.forEach(btn => {
+        // Mobile touch support
         btn.addEventListener('touchstart', function(e) {
             e.preventDefault();
             handleFilterClick.call(this);
@@ -624,22 +472,76 @@ function initFilterSystem() {
     
     const loadMoreBtn = document.getElementById('loadMore');
     if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', function() {
-            this.style.minHeight = '44px';
-            this.style.minWidth = '44px';
-            
-            const originalText = this.textContent;
+        // Mobile touch support
+        loadMoreBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            handleLoadMore.call(this);
+        });
+        
+        loadMoreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            handleLoadMore.call(this);
+        });
+        
+        function handleLoadMore() {
             this.textContent = 'Loading...';
             this.disabled = true;
-            this.classList.add('loading');
             
             setTimeout(() => {
-                showMobileNotification('More articles loaded!', 'info');
-                this.textContent = originalText;
+                // Mobile-friendly alert
+                const isMobile = window.innerWidth <= 768;
+                const message = isMobile ? 'Loaded!' : 'More articles loaded!';
+                alert(message);
+                this.textContent = 'Load More Articles';
                 this.disabled = false;
-                this.classList.remove('loading');
             }, 1500);
-        });
+        }
+    }
+}
+
+// ===== COUNTERS =====
+function initCounters() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    if (statNumbers.length > 0) {
+        // Disable animation on mobile for performance
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            // Just show the numbers on mobile
+            statNumbers.forEach(stat => {
+                const count = parseInt(stat.getAttribute('data-count')) || parseInt(stat.textContent) || 0;
+                if (count > 0) {
+                    stat.textContent = count.toLocaleString();
+                }
+            });
+            return;
+        }
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const count = parseInt(target.getAttribute('data-count')) || 1000;
+                    const duration = 2000;
+                    const step = count / (duration / 16);
+                    let current = 0;
+                    
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= count) {
+                            current = count;
+                            clearInterval(timer);
+                        }
+                        target.textContent = Math.floor(current).toLocaleString();
+                    }, 16);
+                    
+                    observer.unobserve(target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        statNumbers.forEach(stat => observer.observe(stat));
     }
 }
 
@@ -647,31 +549,45 @@ function initFilterSystem() {
 function initHoverEffects() {
     const serviceCards = document.querySelectorAll('.service-card');
     const teamCards = document.querySelectorAll('.team-card');
+    const packageCards = document.querySelectorAll('.package-card');
     
+    // Handle hover effects for all cards
     function addCardEffects(cards) {
         cards.forEach(card => {
+            // Desktop hover effects
             card.addEventListener('mouseenter', function() {
                 if (window.innerWidth > 768) {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                    const isPopular = this.classList.contains('popular');
+                    if (isPopular) {
+                        this.style.transform = 'scale(1.05) translateY(-5px)';
+                    } else {
+                        this.style.transform = 'translateY(-10px) scale(1.02)';
+                    }
                 }
             });
             
             card.addEventListener('mouseleave', function() {
                 if (window.innerWidth > 768) {
-                    this.style.transform = 'translateY(0) scale(1)';
+                    const isPopular = this.classList.contains('popular');
+                    if (isPopular) {
+                        this.style.transform = 'scale(1.05)';
+                    } else {
+                        this.style.transform = 'translateY(0) scale(1)';
+                    }
                 }
             });
             
+            // Mobile touch feedback
             card.addEventListener('touchstart', function() {
                 if (window.innerWidth <= 768) {
-                    this.style.transform = 'translateY(-5px) scale(1.01)';
+                    this.style.transform = 'translateY(-5px)';
                     this.style.transition = 'transform 0.2s ease';
                 }
             });
             
             card.addEventListener('touchend', function() {
                 if (window.innerWidth <= 768) {
-                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.transform = 'translateY(0)';
                 }
             });
         });
@@ -679,6 +595,7 @@ function initHoverEffects() {
     
     addCardEffects(serviceCards);
     addCardEffects(teamCards);
+    addCardEffects(packageCards);
 }
 
 // ===== OVERLAP PREVENTION =====
@@ -702,7 +619,7 @@ function initOverlapPrevention() {
 
 function adjustHeroContent() {
     const heroContent = document.querySelector('.hero-content');
-    const hero = document.querySelector('.hero:not(.contact-hero)');
+    const hero = document.querySelector('.hero');
     
     if (heroContent && hero) {
         const heroHeight = hero.offsetHeight;
@@ -718,27 +635,33 @@ function adjustHeroContent() {
     }
 }
 
-// ===== HERO SLIDESHOW =====
-
+// ===== HERO SLIDESHOW - MOBILE OPTIMIZED =====
 function initHeroSlideshow() {
-    // Only run on main hero sections, not contact page
-    const hero = document.querySelector('.hero:not(.contact-hero)');
-    if (!hero) {
-        console.log('No hero section found or on contact page');
-        return;
-    }
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
     
-    // Mobile-optimized image sizes
     const isMobile = window.innerWidth <= 768;
-    const imageSize = isMobile ? '800' : '1920';
     
+    // Use smaller images for mobile
     const images = [
-        `https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=${imageSize}&q=80`,
-        `https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=${imageSize}&q=80`,
-        `https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=${imageSize}&q=80`,
-        `https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=${imageSize}&q=80`,
-        `https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=${imageSize}&q=80`,
-        `https://images.unsplash.com/photo-1568992688065-536aad8a12f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=${imageSize}&q=80`
+        isMobile 
+            ? 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            : 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
+        isMobile 
+            ? 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            : 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+        isMobile 
+            ? 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            : 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+        isMobile 
+            ? 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            : 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+        isMobile 
+            ? 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+        isMobile 
+            ? 'https://images.unsplash.com/photo-1568992688065-536aad8a12f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            : 'https://images.unsplash.com/photo-1568992688065-536aad8a12f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'
     ];
     
     let currentImageIndex = 0;
@@ -746,11 +669,10 @@ function initHeroSlideshow() {
     let dotsContainer;
     let dots = [];
     
-    // Variables to detect if it's a click/tap or scroll
+    // Variables to prevent scrolling from triggering slides
     let touchStartY = 0;
     let touchEndY = 0;
     let isScrolling = false;
-    let scrollTimer;
 
     function setInitialBackground() {
         hero.style.background = `linear-gradient(rgba(6, 20, 46, 0.7), rgba(6, 20, 46, 0.75)), url('${images[0]}') no-repeat center center/cover`;
@@ -758,20 +680,23 @@ function initHeroSlideshow() {
 
     function createDots() {
         dotsContainer = document.createElement('div');
-        dotsContainer.className = 'hero-slideshow-dots mobile-optimized-dots';
+        dotsContainer.className = 'hero-slideshow-dots';
         
         images.forEach((_, index) => {
             const dot = document.createElement('div');
-            dot.className = 'hero-dot mobile-dot';
+            dot.className = 'hero-dot';
             if (index === 0) dot.classList.add('active');
             
+            // Mobile touch support
             dot.addEventListener('touchstart', (e) => {
                 e.stopPropagation();
+                e.preventDefault();
                 goToSlide(index);
             });
             
             dot.addEventListener('click', (e) => {
                 e.stopPropagation();
+                e.preventDefault();
                 goToSlide(index);
             });
             
@@ -801,8 +726,36 @@ function initHeroSlideshow() {
         startAutomaticSlideshow();
     }
 
+    // Modified hero click handler - only triggers on tap, not scroll
     function handleHeroClick(e) {
-        // Only change slide if it's a deliberate click/tap (not scroll)
+        // Check if it's a vertical scroll (not a tap)
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        
+        // Only change slide if vertical movement is minimal (it's a tap, not scroll)
+        if (deltaY < 10 && !e.target.classList.contains('hero-dot')) {
+            changeBackground();
+            startAutomaticSlideshow();
+        }
+    }
+    
+    // Track touch movements to detect scrolling
+    function handleTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+        isScrolling = false;
+    }
+    
+    function handleTouchMove(e) {
+        touchEndY = e.touches[0].clientY;
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        
+        // If vertical movement > 10px, it's probably a scroll
+        if (deltaY > 10) {
+            isScrolling = true;
+        }
+    }
+    
+    function handleTouchEnd(e) {
+        // Only trigger slide change if it wasn't a scroll
         if (!isScrolling && !e.target.classList.contains('hero-dot')) {
             changeBackground();
             startAutomaticSlideshow();
@@ -818,45 +771,6 @@ function initHeroSlideshow() {
         slideshowInterval = setInterval(changeBackground, interval);
     }
 
-    // Detect scrolling vs tapping
-    function handleTouchStart(e) {
-        touchStartY = e.touches[0].clientY;
-        isScrolling = false;
-        
-        // Clear any existing timer
-        if (scrollTimer) clearTimeout(scrollTimer);
-        
-        // Set a timer to detect if it's a scroll
-        scrollTimer = setTimeout(() => {
-            isScrolling = true;
-        }, 100); // 100ms threshold for scroll detection
-    }
-    
-    function handleTouchMove(e) {
-        touchEndY = e.touches[0].clientY;
-        const deltaY = Math.abs(touchEndY - touchStartY);
-        
-        // If vertical movement > 10px, it's probably a scroll
-        if (deltaY > 10) {
-            isScrolling = true;
-            if (scrollTimer) clearTimeout(scrollTimer);
-        }
-    }
-    
-    function handleTouchEnd(e) {
-        if (!isScrolling && !e.target.classList.contains('hero-dot')) {
-            // It's a tap, change slide
-            e.preventDefault();
-            changeBackground();
-            startAutomaticSlideshow();
-        }
-        
-        // Reset after 500ms
-        setTimeout(() => {
-            isScrolling = false;
-        }, 500);
-    }
-
     function init() {
         setInitialBackground();
         createDots();
@@ -865,25 +779,10 @@ function initHeroSlideshow() {
         // Desktop click event
         hero.addEventListener('click', handleHeroClick);
         
-        // Mobile touch events with scroll detection
+        // Mobile touch events
         hero.addEventListener('touchstart', handleTouchStart, { passive: true });
         hero.addEventListener('touchmove', handleTouchMove, { passive: true });
         hero.addEventListener('touchend', handleTouchEnd, { passive: false });
-        
-        // Also detect wheel/mouse scroll
-        hero.addEventListener('wheel', function() {
-            isScrolling = true;
-            setTimeout(() => {
-                isScrolling = false;
-            }, 500);
-        });
-        
-        hero.addEventListener('scroll', function() {
-            isScrolling = true;
-            setTimeout(() => {
-                isScrolling = false;
-            }, 500);
-        });
     }
 
     init();
@@ -903,167 +802,7 @@ function initHeroSlideshow() {
     });
 }
 
-// ===== SCROLL EFFECTS - UPDATED =====
-function initScrollEffects() {
-    // Disable parallax on mobile for performance
-    if (window.innerWidth > 768) {
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero:not(.contact-hero)');
-            if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-            }
-        });
-    }
-    
-    // Smooth scrolling for anchor links - optimized for mobile
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            
-            if (targetId === '#') return;
-            
-            e.preventDefault();
-            const target = document.querySelector(targetId);
-            
-            if (target) {
-                // Close mobile menu if open
-                if (window.innerWidth <= 768) {
-                    const hamburger = document.querySelector('.hamburger.active');
-                    if (hamburger) {
-                        hamburger.classList.remove('active');
-                        document.querySelector('.nav-menu').classList.remove('active');
-                        document.body.classList.remove('menu-open');
-                    }
-                }
-                
-                const offset = window.innerWidth <= 768 ? 80 : 100;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-    
-    // Ensure scrolling works on hero section
-    const hero = document.querySelector('.hero:not(.contact-hero)');
-    if (hero) {
-        // Make hero section scrollable
-        hero.style.touchAction = 'pan-y';
-        hero.style.overscrollBehavior = 'contain';
-        
-        // Prevent hero section from interfering with page scroll
-        hero.addEventListener('wheel', function(e) {
-            // Allow normal wheel scrolling
-        }, { passive: true });
-        
-        hero.addEventListener('touchmove', function(e) {
-            // Allow normal touch scrolling
-        }, { passive: true });
-    }
-}
-
-// ===== MOBILE NOTIFICATION =====
-function showMobileNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.className = `mobile-notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span>${message}</span>
-            <button class="notification-close">&times;</button>
-        </div>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    if (!document.querySelector('#mobile-notification-styles')) {
-        const styles = document.createElement('style');
-        styles.id = 'mobile-notification-styles';
-        styles.textContent = `
-            .mobile-notification {
-                position: fixed;
-                top: 20px;
-                left: 10px;
-                right: 10px;
-                padding: 15px;
-                border-radius: 8px;
-                color: white;
-                z-index: 10000;
-                max-width: 500px;
-                margin: 0 auto;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                transform: translateY(-100px);
-                transition: transform 0.3s ease;
-            }
-            .notification-success { 
-                background: linear-gradient(135deg, #10b981, #059669); 
-            }
-            .notification-error { 
-                background: linear-gradient(135deg, #ef4444, #dc2626); 
-            }
-            .notification-info { 
-                background: linear-gradient(135deg, #3b82f6, #2563eb); 
-            }
-            .mobile-notification.show { 
-                transform: translateY(0); 
-            }
-            .notification-content {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .notification-close {
-                background: none;
-                border: none;
-                color: white;
-                font-size: 24px;
-                cursor: pointer;
-                padding: 0;
-                width: 30px;
-                height: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                -webkit-tap-highlight-color: transparent;
-            }
-            @media (max-width: 768px) {
-                .mobile-notification {
-                    top: 10px;
-                    left: 10px;
-                    right: 10px;
-                    font-size: 14px;
-                }
-            }
-        `;
-        document.head.appendChild(styles);
-    }
-    
-    setTimeout(() => notification.classList.add('show'), 100);
-    
-    const autoRemoveTime = window.innerWidth <= 768 ? 4000 : 5000;
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.remove(), 300);
-    }, autoRemoveTime);
-    
-    notification.querySelector('.notification-close').addEventListener('click', () => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.remove(), 300);
-    });
-    
-    if (window.innerWidth <= 768) {
-        notification.addEventListener('touchstart', function() {
-            this.classList.remove('show');
-            setTimeout(() => this.remove(), 300);
-        });
-    }
-}
-
 // ===== TESTIMONIALS SLIDER =====
-// Your original testimonials code with mobile enhancements
 document.addEventListener('DOMContentLoaded', function() {
     const track = document.getElementById('testimonialsTrack');
     const sliderContainer = document.getElementById('sliderContainer');
@@ -1128,12 +867,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Mobile-optimized button handling
     if (prevBtn && nextBtn) {
-        // Make buttons larger on mobile
+        // Make buttons touch-friendly on mobile
         if (window.innerWidth <= 768) {
-            prevBtn.style.minHeight = '50px';
-            prevBtn.style.minWidth = '50px';
-            nextBtn.style.minHeight = '50px';
-            nextBtn.style.minWidth = '50px';
+            prevBtn.classList.add('touch-optimized');
+            nextBtn.classList.add('touch-optimized');
         }
         
         prevBtn.addEventListener('click', moveToPrevTestimonial);
@@ -1343,7 +1080,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== WEB DEVELOPMENT PAGE =====
 function initWebDevPage() {
-    // FAQ Toggle Functionality with touch support
+    // FAQ Toggle Functionality with mobile support
     const faqQuestions = document.querySelectorAll('.faq-question');
     
     if (faqQuestions.length > 0) {
@@ -1352,48 +1089,13 @@ function initWebDevPage() {
                 toggleFAQ(question);
             });
             
-            // Touch support for mobile
+            // Mobile touch support
             question.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 toggleFAQ(question);
             });
         });
     }
-
-    // Package card hover effects with touch support
-    const packageCards = document.querySelectorAll('.package-card');
-    
-    packageCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            if (window.innerWidth > 768) {
-                this.style.transform = this.classList.contains('popular') 
-                    ? 'scale(1.05) translateY(-5px)' 
-                    : 'translateY(-5px)';
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            if (window.innerWidth > 768) {
-                this.style.transform = this.classList.contains('popular') 
-                    ? 'scale(1.05)' 
-                    : 'translateY(0)';
-            }
-        });
-        
-        // Touch feedback for mobile
-        card.addEventListener('touchstart', function() {
-            if (window.innerWidth <= 768) {
-                this.style.transform = 'translateY(-3px)';
-                this.style.transition = 'transform 0.2s ease';
-            }
-        });
-        
-        card.addEventListener('touchend', function() {
-            if (window.innerWidth <= 768) {
-                this.style.transform = 'translateY(0)';
-            }
-        });
-    });
 
     // Animation on scroll for web development page
     const animateWebDevElements = () => {
@@ -1435,7 +1137,9 @@ function initWebDevPage() {
             const message = formData.get('message');
             
             if (!name || !email || !package) {
-                showMobileNotification('Please fill in all required fields.', 'error');
+                const isMobile = window.innerWidth <= 768;
+                const message = isMobile ? 'Fill all fields' : 'Please fill in all required fields.';
+                alert(message);
                 return;
             }
             
@@ -1446,7 +1150,9 @@ function initWebDevPage() {
             submitBtn.disabled = true;
             
             setTimeout(() => {
-                showMobileNotification('Thank you for your inquiry! We will contact you shortly.', 'success');
+                const isMobile = window.innerWidth <= 768;
+                const message = isMobile ? 'Thank you!' : 'Thank you for your inquiry! We will contact you shortly.';
+                alert(message);
                 this.reset();
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
@@ -1505,7 +1211,7 @@ function initFAQ() {
                 }
             });
             
-            // Touch support for mobile
+            // Mobile touch support
             question.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 const faqItem = question.parentElement;
@@ -1534,6 +1240,10 @@ function initFAQ() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    initFAQ();
+});
+
 // ===== DIGITAL MARKETING PAGE =====
 function initDigitalMarketingPage() {
     // FAQ Toggle Functionality
@@ -1559,7 +1269,7 @@ function initDigitalMarketingPage() {
                 }
             });
             
-            // Touch support
+            // Mobile touch support
             question.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 const answer = question.nextElementSibling;
@@ -1581,45 +1291,7 @@ function initDigitalMarketingPage() {
         });
     }
 
-    // Package card hover effects
-    const packageCards = document.querySelectorAll('.package-card');
-    
-    packageCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            if (window.innerWidth > 768) {
-                this.style.transform = this.classList.contains('popular') 
-                    ? 'scale(1.05) translateY(-5px)' 
-                    : 'translateY(-5px)';
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            if (window.innerWidth > 768) {
-                this.style.transform = this.classList.contains('popular') 
-                    ? 'scale(1.05)' 
-                    : 'translateY(0)';
-            }
-        });
-        
-        // Touch feedback
-        card.addEventListener('touchstart', function() {
-            if (window.innerWidth <= 768) {
-                this.style.transform = this.classList.contains('popular') 
-                    ? 'scale(1.02) translateY(-3px)' 
-                    : 'translateY(-3px)';
-            }
-        });
-        
-        card.addEventListener('touchend', function() {
-            if (window.innerWidth <= 768) {
-                this.style.transform = this.classList.contains('popular') 
-                    ? 'scale(1.02)' 
-                    : 'translateY(0)';
-            }
-        });
-    });
-
-    // Pricing Tabs Functionality
+    // Pricing Tabs Functionality with mobile support
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
     
@@ -1638,7 +1310,7 @@ function initDigitalMarketingPage() {
                 }
             });
             
-            // Touch support
+            // Mobile touch support
             button.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 const targetTab = button.getAttribute('data-tab');
@@ -1696,6 +1368,7 @@ function initContactPage() {
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
             
@@ -1703,7 +1376,9 @@ function initContactPage() {
             submitBtn.disabled = true;
             
             setTimeout(() => {
-                showMobileNotification('Thank you for your message! We\'ll get back to you within 24 hours.', 'success');
+                const isMobile = window.innerWidth <= 768;
+                const message = isMobile ? 'Thank you!' : 'Thank you for your message! We\'ll get back to you within 24 hours.';
+                alert(message);
                 this.reset();
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
@@ -1711,10 +1386,59 @@ function initContactPage() {
         });
     }
     
-    // Initialize contact page counters
-    initContactCounters();
-    
     console.log('Contact page initialized successfully');
+}
+
+// Contact page particles - disabled on mobile for performance
+function initContactParticles() {
+    const canvas = document.getElementById('contact-particles');
+    if (!canvas) return;
+    
+    // Disable on mobile for performance
+    if (window.innerWidth <= 768) {
+        canvas.style.display = 'none';
+        return;
+    }
+    
+    // Simple particle effect
+    const particles = [];
+    const particleCount = 30;
+    
+    for (let i = 0; i < particleCount; i++) {
+        particles.push({
+            x: Math.random() * canvas.offsetWidth,
+            y: Math.random() * canvas.offsetHeight,
+            size: Math.random() * 2 + 1,
+            speed: Math.random() * 0.5 + 0.2,
+            opacity: Math.random() * 0.5 + 0.3
+        });
+    }
+    
+    function animateParticles() {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+        
+        particles.forEach(particle => {
+            particle.y += particle.speed;
+            if (particle.y > canvas.offsetHeight) {
+                particle.y = 0;
+                particle.x = Math.random() * canvas.offsetWidth;
+            }
+            
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 215, 0, ${particle.opacity})`;
+            ctx.fill();
+        });
+        
+        requestAnimationFrame(animateParticles);
+    }
+    
+    // Set canvas size
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    
+    animateParticles();
 }
 
 // ===== ABOUT PAGE =====
@@ -1731,6 +1455,15 @@ function initAboutCounters() {
     const statNumbers = document.querySelectorAll('.about-stats .stat-number');
     
     if (statNumbers.length === 0) return;
+    
+    // Disable animation on mobile
+    if (window.innerWidth <= 768) {
+        statNumbers.forEach(stat => {
+            const count = parseInt(stat.getAttribute('data-count')) || 100;
+            stat.textContent = count;
+        });
+        return;
+    }
     
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
@@ -1779,7 +1512,7 @@ function initTeamCardEffects() {
             }
         });
         
-        // Touch feedback
+        // Mobile touch feedback
         card.addEventListener('touchstart', function() {
             if (window.innerWidth <= 768) {
                 this.style.transform = 'translateY(-4px)';
@@ -1796,9 +1529,9 @@ function initTeamCardEffects() {
 }
 
 function initAboutAnimations() {
+    const isMobile = window.innerWidth <= 768;
+    
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        const isMobile = window.innerWidth <= 768;
-        
         gsap.from('.about-mission .mission-card', {
             scrollTrigger: {
                 trigger: '.about-mission',
@@ -1843,8 +1576,8 @@ function initAboutAnimations() {
     }
     
     const observerOptions = {
-        threshold: window.innerWidth <= 768 ? 0.05 : 0.1,
-        rootMargin: window.innerWidth <= 768 ? '0px 0px -30px 0px' : '0px 0px -50px 0px'
+        threshold: isMobile ? 0.05 : 0.1,
+        rootMargin: isMobile ? '0px 0px -30px 0px' : '0px 0px -50px 0px'
     };
     
     const observer = new IntersectionObserver(function(entries) {
@@ -1889,185 +1622,42 @@ function initAboutSmoothScrolling() {
 
 // ===== CONTACT ANIMATIONS =====
 function initContactAnimations() {
-    // Placeholder for contact animations
-    console.log('Contact animations initialized');
-}
-
-// ===== INJECT MOBILE STYLES =====
-function injectMobileStyles() {
-    const styles = `
-        /* Mobile touch optimizations */
-        .touch-optimized {
-            min-height: 44px;
-            min-width: 44px;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .touch-active {
-            opacity: 0.8;
-            transform: scale(0.98);
-            transition: transform 0.1s ease, opacity 0.1s ease;
-        }
-        
-        /* Prevent text selection on tap */
-        * {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        
-        /* Allow text selection on specific elements */
-        input, textarea, .blog-content, .testimonial-text {
-            -webkit-touch-callout: default;
-            -webkit-user-select: text;
-            -khtml-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
-        
-        /* Mobile menu open state */
-        body.menu-open {
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-        }
-        
-        /* Mobile spinner */
-        .mobile-spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: mobile-spin 1s ease-in-out infinite;
-            margin-right: 8px;
-        }
-        
-        @keyframes mobile-spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Mobile responsive adjustments */
-        @media (max-width: 768px) {
-            .hero-slideshow-dots {
-                bottom: 20px;
-            }
-            
-            .hero-dot {
-                width: 10px;
-                height: 10px;
-                margin: 0 6px;
-            }
-            
-            .testimonial-card {
-                min-width: 85vw;
-                margin: 0 10px;
-            }
-            
-            .service-card, .team-card {
-                transition: transform 0.3s ease;
-            }
-            
-            /* Improve form inputs on mobile */
-            input, textarea, select {
-                font-size: 16px !important;
-            }
-            
-            .package-card {
-                margin: 10px 0;
-            }
-            
-            .faq-question {
-                padding: 15px;
-            }
-            
-            .tab-button {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2rem !important;
-            }
-            
-            .hero-subtitle {
-                font-size: 1rem !important;
-            }
-            
-            .section-title {
-                font-size: 1.8rem !important;
-            }
-            
-            .package-card {
-                padding: 20px;
-            }
-            
-            .process-step {
-                padding: 15px;
-            }
-        }
-        
-        /* Loading state for mobile */
-        .loading {
-            position: relative;
-        }
-        
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: mobile-spin 1s ease-in-out infinite;
-        }
-    `;
-    
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = styles;
-    document.head.appendChild(styleSheet);
-}
-
-// Initialize mobile styles
-document.addEventListener('DOMContentLoaded', injectMobileStyles);
-
-// ===== UTILITY FUNCTIONS =====
-function debounce(func, wait, immediate) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            timeout = null;
-            if (!immediate) func(...args);
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func(...args);
-    };
-}
-
-function throttle(func, limit) {
-    let inThrottle;
-    return function(...args) {
-        if (!inThrottle) {
-            func.apply(this, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
+    // Initialize contact particles if on contact page
+    if (document.querySelector('.contact-page')) {
+        initContactParticles();
     }
+}
+
+// ===== FORM FUNCTIONS =====
+function initForms() {
+    const contactForms = document.querySelectorAll('.contact-form, .newsletter-form');
+    
+    contactForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleFormSubmission(this);
+        });
+    });
+}
+
+function handleFormSubmission(form) {
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    // Show loading state
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    
+    // Simulate form submission
+    setTimeout(() => {
+        const isMobile = window.innerWidth <= 768;
+        const message = isMobile ? 'Message sent!' : 'Message sent successfully! We\'ll get back to you soon.';
+        alert(message);
+        form.reset();
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }, 2000);
 }
 
 // ===== EXPORT FUNCTIONALITY =====
@@ -2096,14 +1686,33 @@ window.ThriveAxis.digitalMarketing = {
             });
         }
     },
-    initFAQ: initFAQ,
-    initSmoothScrolling: initAboutSmoothScrolling
+    initFAQ: initFAQ
 };
 
 window.ThriveAxis.utils = {
-    debounce: debounce,
-    throttle: throttle,
-    showNotification: showMobileNotification
+    debounce: function(func, wait, immediate) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                timeout = null;
+                if (!immediate) func(...args);
+            };
+            const callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func(...args);
+        };
+    },
+    throttle: function(func, limit) {
+        let inThrottle;
+        return function(...args) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
 };
 
 window.ThriveAxis.pages = {
@@ -2113,66 +1722,5 @@ window.ThriveAxis.pages = {
     initAbout: initAboutPage,
     initWebDev: initWebDevPage
 };
-
-// ===== CONTACT PARTICLES =====
-function initContactParticles() {
-    const canvas = document.getElementById('contact-particles');
-    if (!canvas) return;
-    
-    // Simple particle effect - disabled on mobile for performance
-    if (window.innerWidth <= 768) {
-        canvas.style.display = 'none';
-        return;
-    }
-    
-    const particles = [];
-    const particleCount = window.innerWidth <= 768 ? 15 : 30;
-    
-    for (let i = 0; i < particleCount; i++) {
-        particles.push({
-            x: Math.random() * canvas.offsetWidth,
-            y: Math.random() * canvas.offsetHeight,
-            size: Math.random() * 2 + 1,
-            speed: Math.random() * 0.5 + 0.2,
-            opacity: Math.random() * 0.5 + 0.3
-        });
-    }
-    
-    function animateParticles() {
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-        
-        particles.forEach(particle => {
-            particle.y += particle.speed;
-            if (particle.y > canvas.offsetHeight) {
-                particle.y = 0;
-                particle.x = Math.random() * canvas.offsetWidth;
-            }
-            
-            ctx.beginPath();
-            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 215, 0, ${particle.opacity})`;
-            ctx.fill();
-        });
-        
-        requestAnimationFrame(animateParticles);
-    }
-    
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-    
-    animateParticles();
-    
-    // Reinitialize on resize
-    window.addEventListener('resize', function() {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-    });
-}
-
-// Initialize contact particles
-if (document.getElementById('contact-particles')) {
-    document.addEventListener('DOMContentLoaded', initContactParticles);
-}
 
 console.log('ThriveAxis mobile-optimized script loaded successfully');
