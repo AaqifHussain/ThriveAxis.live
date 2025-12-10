@@ -16,43 +16,39 @@ document.addEventListener('DOMContentLoaded', function() {
     initContactAnimations(); // Added for contact page
 });
 
-// Navigation functionality
-function initNavigation() {
+document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
-    
-    if (hamburger) {
-        hamburger.addEventListener('click', function() {
+    const navbar = document.querySelector('.navbar');
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
     }
-    
-    // Close mobile menu when clicking on a link
+
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            if (hamburger) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
         });
     });
-    
-    // Navbar scroll effect
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        if (navbar) {
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(6, 20, 46, 0.98)';
-                navbar.style.padding = '0.5rem 0';
-            } else {
-                navbar.style.background = 'rgba(6, 20, 46, 0.95)';
-                navbar.style.padding = '1rem 0';
-            }
+
+    window.addEventListener('scroll', () => {
+        if (!navbar) return;
+
+        if (window.scrollY > 100) {
+            navbar.style.background = 'rgba(6, 20, 46, 0.98)';
+            navbar.style.padding = '0.5rem 0';
+        } else {
+            navbar.style.background = 'rgba(6, 20, 46, 0.95)';
+            navbar.style.padding = '1rem 0';
         }
     });
-}
+});
+
 
 // Animation initialization
 function initAnimations() {
@@ -1481,3 +1477,4 @@ window.ThriveAxis.about = {
     initAnimations: initAboutAnimations,
     initTeamEffects: initTeamCardEffects
 };
+
