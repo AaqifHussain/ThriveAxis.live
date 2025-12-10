@@ -1,6 +1,5 @@
 // Main JavaScript file for ThriveAxis website
 // Enhanced for mobile responsiveness
-// CONTACT PAGE HAS SEPARATE SCRIPT - removed contact functionality
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded - initializing ThriveAxis');
@@ -11,21 +10,26 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollEffects();
     initFormHandlers();
     initFilterSystem();
-    initCounters();
+    initCounters(); // This won't run on contact page
     initOverlapPrevention();
     initHoverEffects();
     initHeroSlideshow();
+    initContactAnimations();
     initTouchOptimizations();
     initMobileGestures();
     initViewportHandling();
     
-    // Initialize page-specific components (EXCLUDING CONTACT)
+    // Initialize page-specific components
     if (document.querySelector('.digital-marketing-page')) {
         initDigitalMarketingPage();
     }
     
     if (document.querySelector('.services-page')) {
         initServicesPage();
+    }
+    
+    if (document.querySelector('.contact-page, .page-contact, .contact-hero')) {
+        initContactPage(); // This will call initContactCounters()
     }
     
     if (document.querySelector('.webdev-hero')) {
@@ -422,7 +426,13 @@ function initFormHandlers() {
 
 // ===== COUNTERS - MAIN FUNCTION =====
 function initCounters() {
-    const statNumbers = document.querySelectorAll('.stat-number');
+    // Skip contact page stats (they have their own counter)
+    if (document.querySelector('.contact-page, .page-contact, .contact-hero')) {
+        console.log('Skipping main counters on contact page');
+        return;
+    }
+    
+    const statNumbers = document.querySelectorAll('.stat-number:not(.contact-stats .stat-number)');
     
     if (statNumbers.length > 0) {
         // Disable counter animation on mobile if performance is an issue
@@ -489,6 +499,85 @@ function initCounters() {
         
         statNumbers.forEach(stat => observer.observe(stat));
     }
+}
+
+// ===== CONTACT PAGE COUNTERS =====
+function initContactCounters() {
+    // Only run on contact page
+    const contactPageIndicator = document.querySelector('.contact-page, .page-contact, .contact-hero');
+    if (!contactPageIndicator) {
+        console.log('Not a contact page, skipping contact counters');
+        return;
+    }
+    
+    console.log('Initializing contact page counters');
+    
+    // Find all stat numbers in contact page
+    const contactStatNumbers = document.querySelectorAll('.contact-stats .stat-number, .contact-hero .stat-number, .stats-container .stat-number');
+    
+    if (contactStatNumbers.length === 0) {
+        console.log('No contact stat numbers found');
+        return;
+    }
+    
+    // Contact page specific values
+    const contactValues = [24, 98, 150, 50];
+    const suffixes = ['', '%', '+', '+'];
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const index = Array.from(contactStatNumbers).indexOf(target);
+                
+                if (index !== -1 && contactValues[index] !== undefined) {
+                    const value = contactValues[index];
+                    const suffix = suffixes[index] || '';
+                    
+                    // Disable animation on mobile for performance
+                    if (window.innerWidth <= 768) {
+                        target.textContent = value + suffix;
+                        observer.unobserve(target);
+                        return;
+                    }
+                    
+                    const duration = 2000;
+                    const step = value / (duration / 16);
+                    let current = 0;
+                    
+                    // Store original value
+                    if (!target.hasAttribute('data-original')) {
+                        target.setAttribute('data-original', value);
+                    }
+                    
+                    // Set initial to 0
+                    target.textContent = '0' + suffix;
+                    
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= value) {
+                            current = value;
+                            clearInterval(timer);
+                        }
+                        target.textContent = Math.floor(current) + suffix;
+                    }, 16);
+                    
+                    observer.unobserve(target);
+                }
+            }
+        });
+    }, { 
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    contactStatNumbers.forEach((stat, index) => {
+        // Set data-count attribute for reference
+        if (contactValues[index] !== undefined) {
+            stat.setAttribute('data-count', contactValues[index]);
+        }
+        observer.observe(stat);
+    });
 }
 
 // ===== FILTER SYSTEM =====
@@ -629,7 +718,8 @@ function adjustHeroContent() {
     }
 }
 
-// ===== HERO SLIDESHOW - FIXED VERSION =====
+// ===== HERO SLIDESHOW =====
+
 function initHeroSlideshow() {
     // Only run on main hero sections, not contact page
     const hero = document.querySelector('.hero:not(.contact-hero)');
@@ -656,8 +746,11 @@ function initHeroSlideshow() {
     let dotsContainer;
     let dots = [];
     
-    // REMOVED the scroll detection logic - that was causing the issue
-    // Now slides only change on dot clicks or automatically
+    // Variables to detect if it's a click/tap or scroll
+    let touchStartY = 0;
+    let touchEndY = 0;
+    let isScrolling = false;
+    let scrollTimer;
 
     function setInitialBackground() {
         hero.style.background = `linear-gradient(rgba(6, 20, 46, 0.7), rgba(6, 20, 46, 0.75)), url('${images[0]}') no-repeat center center/cover`;
@@ -674,13 +767,11 @@ function initHeroSlideshow() {
             
             dot.addEventListener('touchstart', (e) => {
                 e.stopPropagation();
-                e.preventDefault();
                 goToSlide(index);
             });
             
             dot.addEventListener('click', (e) => {
                 e.stopPropagation();
-                e.preventDefault();
                 goToSlide(index);
             });
             
@@ -710,6 +801,14 @@ function initHeroSlideshow() {
         startAutomaticSlideshow();
     }
 
+    function handleHeroClick(e) {
+        // Only change slide if it's a deliberate click/tap (not scroll)
+        if (!isScrolling && !e.target.classList.contains('hero-dot')) {
+            changeBackground();
+            startAutomaticSlideshow();
+        }
+    }
+
     function startAutomaticSlideshow() {
         if (slideshowInterval) {
             clearInterval(slideshowInterval);
@@ -719,13 +818,72 @@ function initHeroSlideshow() {
         slideshowInterval = setInterval(changeBackground, interval);
     }
 
+    // Detect scrolling vs tapping
+    function handleTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+        isScrolling = false;
+        
+        // Clear any existing timer
+        if (scrollTimer) clearTimeout(scrollTimer);
+        
+        // Set a timer to detect if it's a scroll
+        scrollTimer = setTimeout(() => {
+            isScrolling = true;
+        }, 100); // 100ms threshold for scroll detection
+    }
+    
+    function handleTouchMove(e) {
+        touchEndY = e.touches[0].clientY;
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        
+        // If vertical movement > 10px, it's probably a scroll
+        if (deltaY > 10) {
+            isScrolling = true;
+            if (scrollTimer) clearTimeout(scrollTimer);
+        }
+    }
+    
+    function handleTouchEnd(e) {
+        if (!isScrolling && !e.target.classList.contains('hero-dot')) {
+            // It's a tap, change slide
+            e.preventDefault();
+            changeBackground();
+            startAutomaticSlideshow();
+        }
+        
+        // Reset after 500ms
+        setTimeout(() => {
+            isScrolling = false;
+        }, 500);
+    }
+
     function init() {
         setInitialBackground();
         createDots();
         startAutomaticSlideshow();
         
-        // REMOVED the hero click event - only dots change slides now
-        // This prevents scrolling from changing the background
+        // Desktop click event
+        hero.addEventListener('click', handleHeroClick);
+        
+        // Mobile touch events with scroll detection
+        hero.addEventListener('touchstart', handleTouchStart, { passive: true });
+        hero.addEventListener('touchmove', handleTouchMove, { passive: true });
+        hero.addEventListener('touchend', handleTouchEnd, { passive: false });
+        
+        // Also detect wheel/mouse scroll
+        hero.addEventListener('wheel', function() {
+            isScrolling = true;
+            setTimeout(() => {
+                isScrolling = false;
+            }, 500);
+        });
+        
+        hero.addEventListener('scroll', function() {
+            isScrolling = true;
+            setTimeout(() => {
+                isScrolling = false;
+            }, 500);
+        });
     }
 
     init();
@@ -743,6 +901,69 @@ function initHeroSlideshow() {
             initHeroSlideshow();
         }
     });
+}
+
+// ===== SCROLL EFFECTS - UPDATED =====
+function initScrollEffects() {
+    // Disable parallax on mobile for performance
+    if (window.innerWidth > 768) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero:not(.contact-hero)');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    }
+    
+    // Smooth scrolling for anchor links - optimized for mobile
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            
+            if (targetId === '#') return;
+            
+            e.preventDefault();
+            const target = document.querySelector(targetId);
+            
+            if (target) {
+                // Close mobile menu if open
+                if (window.innerWidth <= 768) {
+                    const hamburger = document.querySelector('.hamburger.active');
+                    if (hamburger) {
+                        hamburger.classList.remove('active');
+                        document.querySelector('.nav-menu').classList.remove('active');
+                        document.body.classList.remove('menu-open');
+                    }
+                }
+                
+                const offset = window.innerWidth <= 768 ? 80 : 100;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Ensure scrolling works on hero section
+    const hero = document.querySelector('.hero:not(.contact-hero)');
+    if (hero) {
+        // Make hero section scrollable
+        hero.style.touchAction = 'pan-y';
+        hero.style.overscrollBehavior = 'contain';
+        
+        // Prevent hero section from interfering with page scroll
+        hero.addEventListener('wheel', function(e) {
+            // Allow normal wheel scrolling
+        }, { passive: true });
+        
+        hero.addEventListener('touchmove', function(e) {
+            // Allow normal touch scrolling
+        }, { passive: true });
+    }
 }
 
 // ===== MOBILE NOTIFICATION =====
@@ -1469,6 +1690,33 @@ function initServicesPage() {
     console.log('Services page initialized successfully');
 }
 
+// ===== CONTACT PAGE =====
+function initContactPage() {
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Sending Message...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                showMobileNotification('Thank you for your message! We\'ll get back to you within 24 hours.', 'success');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+    }
+    
+    // Initialize contact page counters
+    initContactCounters();
+    
+    console.log('Contact page initialized successfully');
+}
+
 // ===== ABOUT PAGE =====
 function initAboutPage() {
     console.log('About page loaded - initializing components');
@@ -1639,6 +1887,12 @@ function initAboutSmoothScrolling() {
     });
 }
 
+// ===== CONTACT ANIMATIONS =====
+function initContactAnimations() {
+    // Placeholder for contact animations
+    console.log('Contact animations initialized');
+}
+
 // ===== INJECT MOBILE STYLES =====
 function injectMobileStyles() {
     const styles = `
@@ -1780,12 +2034,6 @@ function injectMobileStyles() {
             border-radius: 50%;
             animation: mobile-spin 1s ease-in-out infinite;
         }
-        
-        /* Fix for hero scrolling */
-        .hero:not(.contact-hero) {
-            touch-action: pan-y;
-            overscroll-behavior: contain;
-        }
     `;
     
     const styleSheet = document.createElement('style');
@@ -1861,8 +2109,70 @@ window.ThriveAxis.utils = {
 window.ThriveAxis.pages = {
     initDigitalMarketing: initDigitalMarketingPage,
     initServices: initServicesPage,
+    initContact: initContactPage,
     initAbout: initAboutPage,
     initWebDev: initWebDevPage
 };
 
-console.log('ThriveAxis mobile-optimized script loaded successfully (contact page functionality removed)');
+// ===== CONTACT PARTICLES =====
+function initContactParticles() {
+    const canvas = document.getElementById('contact-particles');
+    if (!canvas) return;
+    
+    // Simple particle effect - disabled on mobile for performance
+    if (window.innerWidth <= 768) {
+        canvas.style.display = 'none';
+        return;
+    }
+    
+    const particles = [];
+    const particleCount = window.innerWidth <= 768 ? 15 : 30;
+    
+    for (let i = 0; i < particleCount; i++) {
+        particles.push({
+            x: Math.random() * canvas.offsetWidth,
+            y: Math.random() * canvas.offsetHeight,
+            size: Math.random() * 2 + 1,
+            speed: Math.random() * 0.5 + 0.2,
+            opacity: Math.random() * 0.5 + 0.3
+        });
+    }
+    
+    function animateParticles() {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+        
+        particles.forEach(particle => {
+            particle.y += particle.speed;
+            if (particle.y > canvas.offsetHeight) {
+                particle.y = 0;
+                particle.x = Math.random() * canvas.offsetWidth;
+            }
+            
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 215, 0, ${particle.opacity})`;
+            ctx.fill();
+        });
+        
+        requestAnimationFrame(animateParticles);
+    }
+    
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    
+    animateParticles();
+    
+    // Reinitialize on resize
+    window.addEventListener('resize', function() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    });
+}
+
+// Initialize contact particles
+if (document.getElementById('contact-particles')) {
+    document.addEventListener('DOMContentLoaded', initContactParticles);
+}
+
+console.log('ThriveAxis mobile-optimized script loaded successfully');
