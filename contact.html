@@ -23,14 +23,7 @@
   gtag('config', 'G-P5RKGG1X59');
 </script>
     <style>
-        /* ===== CONTACT PAGE ENHANCEMENTS ===== */
-        
-/* Viewport Meta Tag - Add this to your HTML head section */
-/*
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
-*/
-
-/* Enhanced Hero Section */
+       
 .contact-hero {
     background: linear-gradient(135deg, 
         rgba(6, 20, 46, 0.95) 0%, 
@@ -167,7 +160,7 @@
     box-sizing: border-box;
 }
 
-/* Contact Info Card */
+
 .contact-info-card {
     background: var(--white);
     border-radius: var(--radius-lg);
@@ -217,7 +210,7 @@
     z-index: 2;
 }
 
-/* Contact Details */
+
 .contact-details-enhanced {
     margin-bottom: var(--space-xl);
 }
@@ -280,7 +273,7 @@
     font-weight: 500;
 }
 
-/* Business Hours */
+
 .business-hours {
     background: var(--navy);
     color: var(--white);
@@ -318,7 +311,7 @@
     border-bottom: none;
 }
 
-/* Enhanced Form Card */
+
 .form-card {
     background: var(--white);
     border-radius: var(--radius-lg);
@@ -416,7 +409,7 @@
     font-weight: 600;
 }
 
-/* Enhanced Form Styles */
+
 .enhanced-form .form-group {
     margin-bottom: var(--space-lg);
     position: relative;
@@ -460,7 +453,7 @@
     gap: var(--space-md);
 }
 
-/* Submit Button */
+
 .submit-btn {
     background: linear-gradient(135deg, var(--gold-light), var(--gold));
     color: var(--navy);
@@ -510,7 +503,7 @@
     margin-bottom: var(--space-lg);
 }
 
-/* Trust Indicators */
+
 .trust-indicators {
     display: flex;
     justify-content: space-between;
@@ -543,7 +536,7 @@
     font-size: clamp(1rem, 3vw, 1.2rem);
 }
 
-/* Quick Contact Bar */
+
 .quick-contact-bar {
     background: linear-gradient(135deg, var(--navy), var(--navy-dark));
     color: var(--white);
@@ -592,7 +585,7 @@
     transform: translateY(-2px);
 }
 
-/* Testimonial Section */
+
 .contact-testimonials {
     padding: clamp(var(--space-xl), 8vw, var(--space-xxl)) 0;
     background: var(--white);
@@ -627,7 +620,7 @@
     font-family: serif;
 }
 
-/* Enhanced Responsive Design */
+
 @media (max-width: 1200px) {
     .contact-container {
         max-width: 95vw;
@@ -787,7 +780,7 @@
     }
 }
 
-/* Fix for iOS Safari */
+
 @supports (-webkit-touch-callout: none) {
     .contact-hero {
         background-attachment: scroll;
@@ -807,7 +800,7 @@
     }
 }
 
-/* Fix for Firefox */
+
 @-moz-document url-prefix() {
     .contact-info-card::before,
     .form-card::before {
@@ -815,7 +808,7 @@
     }
 }
 
-/* Container width fix for very small screens */
+
 @media (max-width: 320px) {
     .contact-container {
         max-width: 100vw;
@@ -837,7 +830,7 @@
        </style>    
 </head>
 <body>
-    <!-- Navigation -->
+
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -860,7 +853,7 @@
         </div>
     </nav>
 
-    <!-- Enhanced Contact Hero -->
+    
     <section class="contact-hero">
         <div class="container contact-hero-content">
             <div class="hero-cta-badge">
@@ -891,7 +884,7 @@
         <div id="contact-particles"></div>
     </section>
 
-    <!-- Quick Contact Bar (Mobile) -->
+   
     <div class="quick-contact-bar" id="quickContactBar">
         <div class="quick-contact-content">
             <div class="quick-contact-text">
@@ -903,10 +896,10 @@
         </div>
     </div>
 
-    <!-- Enhanced Contact Section -->
+   
     <section class="enhanced-contact-section">
         <div class="contact-container">
-            <!-- Contact Information Card -->
+            
             <div class="contact-info-card">
                 <h2>Why Choose ThriveAxis?</h2>
                 <p class="info-subtitle">We combine cutting-edge AI technology with deep understanding of Indian business challenges to deliver transformative solutions.</p>
@@ -997,14 +990,14 @@
                 </div>
             </div>
             
-            <!-- Enhanced Contact Form -->
+          
             <div class="form-card">
                 <div class="form-header">
                     <h2>Get Your Free Consultation</h2>
                     <p class="form-subtitle">Complete the form below and we'll contact you within 24 hours</p>
                 </div>
                 
-                <!-- Success Message (Hidden by default) -->
+            
                 <div class="success-message" id="successMessage">
                     <div class="success-icon">
                         <i class="fas fa-check-circle"></i>
@@ -1016,7 +1009,7 @@
                     </p>
                 </div>
                 
-                <!-- Contact Form -->
+               
                 <form class="enhanced-form" id="enhancedContactForm" style="display: block;">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
@@ -1058,10 +1051,10 @@
                     <div class="form-group">
                         <select name="budget" required>
                             <option value="" disabled selected>Select Your Project Budget *</option>
-                            <option value="Under ₹50,000">Under ₹50,000</option>
-                            <option value="₹50,000 - ₹1,00,000">₹50,000 - ₹1,00,000</option>
-                            <option value="₹1,00,000 - ₹5,00,000">₹1,00,000 - ₹5,00,000</option>
-                            <option value="₹5,00,000+">₹5,00,000+</option>
+                            <option value="Under ₹50,000">Under ₹5,000</option>
+                            <option value="₹50,000 - ₹1,00,000">₹5,000 - ₹20,000</option>
+                            <option value="₹1,00,000 - ₹5,00,000">₹20,000 - ₹100,000</option>
+                            <option value="₹5,00,000+">₹100,000+</option>
                             <option value="Not sure">Not sure / Need consultation</option>
                         </select>
                     </div>
@@ -1106,7 +1099,7 @@
   document.getElementById("formTs").value = Date.now();
 </script>
 
-    <!-- Testimonial Section -->
+    
     <section class="contact-testimonials">
         <div class="container">
             <h2 class="section-title">What Our Clients Say</h2>
@@ -1119,7 +1112,7 @@
         </div>
     </section>
 
-    <!-- Enhanced Contact Section -->
+   
 <section class="map-section">
     <div class="container">
         <h2 class="section-title">Connect With Us</h2>
@@ -1377,6 +1370,7 @@
 </body>
 
 </html>
+
 
 
 
